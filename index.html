@@ -1243,8 +1243,8 @@
       <p class="hero-sub">Chat without limits. Dive deeper.</p>
       <div class="period-pill-wrap">
         <div class="period-pill">
-          <button class="pp-seg active" data-period="annual" data-monthly="7.9" onclick="selectPeriod(this)">
-            Annual <span class="pp-badge">47% OFF</span>
+          <button class="pp-seg active" data-period="annual" data-monthly="11.18" onclick="selectPeriod(this)">
+            Annual <span class="pp-badge">25% OFF</span>
           </button>
           <button class="pp-seg" data-period="monthly" data-monthly="14.9" onclick="selectPeriod(this)">
             Monthly
@@ -1259,12 +1259,12 @@
     <div class="plan-top">
       <img class="plan-icon" src="images/380.png" width="28" height="28" alt="MAX">
       <span class="plan-name">MAX</span>
-      <span class="plan-discount" id="planDiscount">-47%</span>
+      <span class="plan-discount" id="planDiscount">-25%</span>
     </div>
 
     <div class="plan-pricing">
       <span class="price-original" id="priceOriginal">USD 14.90</span>
-      <div class="price-main"><span id="priceMain">USD 7.90</span><small> / mo</small></div>
+      <div class="price-main"><span id="priceMain">USD 11.18</span><small> / mo</small></div>
     </div>
 
     <ul class="plan-features">
@@ -1498,6 +1498,13 @@
       </div>
       <button class="abtn" onclick="claimAction(this, '친구 초대 완료!', 200)">지금 초대</button>
     </div>
+    <div class="aitem" id="action-onboarding">
+      <div class="ainfo">
+        <div class="at">취향 등록하기</div>
+        <div class="ar"><img class="mi" src="images/mir.png" width="14" height="14" alt="Mir">+50</div>
+      </div>
+      <a class="abtn" href="onboarding/index.html">시작하기</a>
+    </div>
     <div class="aitem" id="action-twitter">
       <div class="ainfo">
         <div class="at">트위터에 팔로우</div>
@@ -1551,7 +1558,7 @@
   window.scrollTo(0, 0);
 
   // ═══ SUBSCRIPTION TOGGLE ═══
-  const ANNUAL_MONTHLY = 7.90;
+  const ANNUAL_MONTHLY = 11.18;
   const MONTHLY_LIST = 14.90;
   const fmt = n => `USD ${n.toFixed(2)}`;
   function selectPeriod(btn) {
