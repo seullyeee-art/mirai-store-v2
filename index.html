@@ -3,10 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>MIRAI Store</title>
+<title>MIRAI 스토어</title>
+<link rel="stylesheet" href="../shared/styles.css">
 <style>
-  @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
-
   * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
   :root {
@@ -45,20 +44,14 @@
     font-family: 'Pretendard Variable', -apple-system, sans-serif;
     min-height: 100dvh;
     background: var(--bg-base);
-    display: flex; justify-content: center;
     overflow-x: hidden; color: var(--label-normal);
   }
 
   .frame {
     width: 100%; max-width: 960px; min-height: 100dvh;
+    margin: 0 auto;
     position: relative; padding-bottom: 60px;
-    background:
-      radial-gradient(ellipse 500px 500px at 30% 5%, rgba(20, 195, 145, 0.18) 0%, transparent 60%),
-      radial-gradient(ellipse 400px 400px at 80% 15%, rgba(40, 208, 237, 0.1) 0%, transparent 60%),
-      radial-gradient(ellipse 600px 400px at 50% 40%, rgba(20, 195, 145, 0.06) 0%, transparent 50%),
-      radial-gradient(ellipse 300px 300px at 20% 70%, rgba(40, 208, 237, 0.05) 0%, transparent 50%),
-      radial-gradient(ellipse 400px 300px at 80% 85%, rgba(20, 195, 145, 0.06) 0%, transparent 50%),
-      var(--bg-base);
+    background: transparent;
   }
 
   /* ═══ PARTICLES ═══ */
@@ -74,14 +67,24 @@
     100% { transform: translateY(-10vh) scale(1) rotate(180deg); opacity: 0; }
   }
 
-  /* ═══ HEADER ═══ */
-  .header {
+  /* ═══ NAV STACK (page-nav + shop-tabs 한 묶음) ═══ */
+  .nav-stack {
+    position: sticky; top: 60px; z-index: 99;
+    backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%);
+    background: rgba(27, 28, 30, 0.88);
+  }
+
+  /* ═══ PAGE NAV (백버튼 + 타이틀 + 잔액) — 배경은 .nav-stack에 ═══ */
+  .page-nav {
     display: flex; align-items: center; justify-content: space-between;
     padding: 0 16px;
-    position: sticky; top: 0; z-index: 100;
-    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-    background: rgba(27, 28, 30, 0.7);
     height: 56px;
+    width: 100%;
+  }
+  @media (max-width: 768px){
+    /* 모바일에선 공통 헤더 숨기고 페이지 네비만 */
+    mirai-header { display: none; }
+    .nav-stack { top: 0; }
   }
   .back-btn {
     width: 36px; height: 36px;
@@ -89,9 +92,10 @@
     display: flex; align-items: center; justify-content: center;
     cursor: pointer; color: var(--label-normal); transition: all 0.2s;
     padding: 0; margin-left: -8px;
+    text-decoration: none;
   }
   .back-btn:active { transform: scale(0.88); }
-  .header h1 {
+  .page-nav h1 {
     font-size: 17px; font-weight: 700; color: var(--label-strong);
     position: absolute; left: 50%; transform: translateX(-50%);
   }
@@ -930,9 +934,9 @@
   }
   .pp-seg:active { transform: scale(0.97); }
   .pp-seg.active {
-    background: linear-gradient(135deg, var(--primary), var(--primary-heavy));
-    color: #ffffff;
-    box-shadow: 0 2px 10px var(--primary-glow);
+    background: rgba(255,255,255,0.10);
+    color: var(--label-strong);
+    box-shadow: none;
   }
   .pp-badge {
     font-size: 10px; font-weight: 800;
@@ -1065,8 +1069,8 @@
   /* ═══ DESKTOP ═══ */
   @media (min-width: 768px) {
     .frame { max-width: 960px; padding-left: 40px; padding-right: 40px; }
-    .header { padding: 0 40px; height: 56px; }
-    .header h1 { font-size: 20px; }
+    .page-nav { padding: 0; height: 56px; }
+    .page-nav h1 { font-size: 20px; }
     .hero { padding: 32px 24px 36px; }
     .hero-title { font-size: 42px; }
     .hero-sub { font-size: 15px; max-width: 460px; }
@@ -1128,6 +1132,39 @@
     .bs-title { font-size: 22px; }
     .toast { font-size: 16px; padding: 14px 28px; }
   }
+
+  /* ═══ SHOP TABS — 배경은 .nav-stack에 ═══ */
+  .shop-tabs {
+    display: flex;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .shop-tab {
+    flex: 1;
+    padding: 14px 0;
+    background: transparent; border: none;
+    font-family: inherit;
+    font-size: 15px; font-weight: 600;
+    color: var(--label-alt);
+    cursor: pointer;
+    position: relative;
+    transition: color 0.18s ease;
+  }
+  .shop-tab:hover { color: var(--label-normal); }
+  .shop-tab.active {
+    color: var(--label-strong);
+  }
+  .shop-tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0; right: 0;
+    height: 2px;
+    background: var(--primary);
+  }
+  .shop-panel.hidden { display: none; }
+  .shop-panel {
+    padding: 0 0 32px;
+  }
 </style>
 </head>
 <body>
@@ -1167,19 +1204,37 @@
   <button class="bs-btn-sub" onclick="closeSheet()">No thanks</button>
 </div>
 
+<div class="app">
+
+<mirai-sidebar active="store"></mirai-sidebar>
+
+<div class="content-wrap">
+
+  <!-- 공통 헤더 (검색 + 미르 + 아바타) -->
+  <mirai-header></mirai-header>
+
 <div class="frame">
 
-  <!-- Header -->
-  <header class="header">
-    <button class="back-btn">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
-    </button>
-    <h1>Store</h1>
-    <div class="bal">
-      <img class="mi" src="images/mir.png" width="22" height="22" alt="Mir">
-      <span>996,499</span>
-    </div>
-  </header>
+  <!-- Sticky nav stack (페이지 네비 + 구매/보상 탭, 배경·blur 한 번에) -->
+  <div class="nav-stack">
+    <header class="page-nav">
+      <a class="back-btn" href="../mirai-home/index.html" aria-label="홈으로">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </a>
+      <h1>스토어</h1>
+      <div class="bal">
+        <img class="mi" src="images/mir.png" width="22" height="22" alt="Mir">
+        <span>996,499</span>
+      </div>
+    </header>
+
+    <nav class="shop-tabs" role="tablist">
+      <button class="shop-tab active" data-tab="buy" role="tab">구매</button>
+      <button class="shop-tab" data-tab="rewards" role="tab">보상</button>
+    </nav>
+  </div>
+
+  <div id="shopBuy" class="shop-panel">
 
   <!-- Hero -->
   <section class="hero ai d1">
@@ -1321,6 +1376,22 @@
     </div>
   </div>
 
+  <!-- History + 구독관리 -->
+  <div class="hist-row ai d11">
+    <div class="hist">
+      <span class="tt">미르 내역</span>
+      <button class="vb">보기</button>
+    </div>
+    <div class="hist">
+      <span class="tt">구독 관리</span>
+      <button class="vb">관리</button>
+    </div>
+  </div>
+
+  </div><!-- /#shopBuy -->
+
+  <div id="shopRewards" class="shop-panel hidden">
+
   <!-- Free Mir -->
   <div class="free-hd ai d9">
     무료 미르 충전소
@@ -1331,7 +1402,7 @@
     <div class="daily-hd">
       <span>🎰</span>
       <span class="tt">일일 룰렛</span>
-      <span class="sub">(최대 50미르)</span>
+      <span class="sub">(최대 300미르)</span>
     </div>
 
     <!-- Roulette Wheel -->
@@ -1456,17 +1527,7 @@
     </div>
   </div>
 
-  <!-- History + 구독관리 -->
-  <div class="hist-row ai d11">
-    <div class="hist">
-      <span class="tt">미르 내역</span>
-      <button class="vb">보기</button>
-    </div>
-    <div class="hist">
-      <span class="tt">구독 관리</span>
-      <button class="vb">관리</button>
-    </div>
-  </div>
+  </div><!-- /#shopRewards -->
 
   <!-- Footer -->
   <div class="footer">
@@ -1480,7 +1541,10 @@
   </div>
 
 </div>
+</div>
+</div>
 
+<script src="../shared/components.js" defer></script>
 <script>
   // 새로고침 시 스크롤 복원 비활성화 → 항상 맨 위에서 시작
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
@@ -1787,6 +1851,31 @@
       }
     }, 4200);
   }
+
+  // ═══ SHOP TABS ═══
+  (function(){
+    const tabs = document.querySelectorAll('.shop-tab');
+    const buyPanel = document.getElementById('shopBuy');
+    const rewardsPanel = document.getElementById('shopRewards');
+
+    function setTab(name) {
+      tabs.forEach(t => t.classList.toggle('active', t.dataset.tab === name));
+      if (buyPanel) buyPanel.classList.toggle('hidden', name !== 'buy');
+      if (rewardsPanel) rewardsPanel.classList.toggle('hidden', name !== 'rewards');
+      // URL 동기화
+      const url = new URL(location.href);
+      if (name === 'rewards') url.searchParams.set('tab', 'rewards');
+      else url.searchParams.delete('tab');
+      history.replaceState(null, '', url);
+    }
+
+    tabs.forEach(t => t.addEventListener('click', () => setTab(t.dataset.tab)));
+
+    // URL 파라미터로 초기 탭 결정 (?tab=rewards → 보상)
+    const params = new URLSearchParams(location.search);
+    const initial = params.get('tab') === 'rewards' ? 'rewards' : 'buy';
+    setTab(initial);
+  })();
 </script>
 </body>
 </html>
