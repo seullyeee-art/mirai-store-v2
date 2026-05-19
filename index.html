@@ -375,12 +375,6 @@
   }
   .prem .pbtn:active { background: rgba(112,115,124,0.32); }
 
-  /* ═══ FREE SECTION ═══ */
-  .free-hd {
-    margin: 24px 16px 14px;
-    display: flex; align-items: center; gap: 6px;
-    font-size: 17px; font-weight: 800; color: var(--label-strong);
-  }
   /* ═══ DAILY ROULETTE ═══ */
   .daily {
     margin: 0 16px;
@@ -1120,7 +1114,6 @@
     .amt { font-size: 17px; }
     .bns { font-size: 12px; }
     .pbtn { padding: 12px 0; font-size: 14px; border-radius: 12px; }
-    .free-hd { margin: 32px 0 18px; font-size: 20px; }
     .daily { margin: 0; padding: 28px 24px; border-radius: 20px; }
     .daily-hd .tt { font-size: 17px; }
     .daily-hd .sub { font-size: 14px; }
@@ -1807,7 +1800,6 @@
   let currentRotation = 0;
   let spinning = false;
   let spun = false;
-  let adRetries = 3;
   let totalMirEarned = 0;
 
   function showSheet() {
