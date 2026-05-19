@@ -390,9 +390,9 @@
       linear-gradient(160deg, var(--bg-card-alt), var(--bg-card));
     border: 1px solid var(--line-solid);
   }
-  .daily-hd { display: flex; align-items: center; gap: 6px; margin-bottom: 14px; }
+  .daily-hd { display: flex; align-items: center; gap: 6px; margin-bottom: 16px; }
   .daily-hd .tt { font-size: 15px; font-weight: 700; color: var(--label-strong); }
-  .daily-hd .sub { font-size: 11px; color: var(--label-alt); margin-left: 4px; }
+  .daily-hd .sub { font-size: 13px; color: var(--label-alt); margin-left: 4px; }
 
   .days {
     display: flex; gap: 4px;
@@ -628,17 +628,30 @@
   .ecard-i.ad { background: rgba(20,195,145,0.12); color: var(--primary); }
   .ecard-i.task { background: rgba(255,169,56,0.12); color: var(--cautionary); }
   .ecard-p { font-size: 13px; font-weight: 600; color: var(--label-neutral); }
-  .ecard-s { font-size: 11px; color: var(--label-alt); display: flex; align-items: center; gap: 4px; }
+  .ecard-s { font-size: 12px; font-weight: 600; color: var(--primary); display: flex; align-items: center; gap: 4px; }
+  .ecard-bar {
+    height: 6px; background: var(--fill-normal);
+    border-radius: 3px; overflow: hidden;
+    margin-top: 2px;
+  }
+  .ecard-bar-fill {
+    height: 100%; border-radius: 3px;
+    background: linear-gradient(90deg, var(--primary-heavy), var(--primary-normal));
+    transition: width 0.6s ease;
+    box-shadow: 0 0 8px rgba(20,195,145,0.4);
+  }
   .ebtn {
-    margin-top: 6px; padding: 8px; border-radius: 10px;
+    margin-top: 6px; padding: 12px; border-radius: 12px;
     border: none;
-    background: rgba(112,115,124,0.22);
+    background: rgba(112,115,124,0.32);
     backdrop-filter: blur(32px); -webkit-backdrop-filter: blur(32px);
-    font-family: inherit; font-size: 13px; font-weight: 600;
+    font-family: inherit; font-size: 14px; font-weight: 700;
     color: var(--label-normal); cursor: pointer; transition: all 0.15s;
     text-decoration: none; text-align: center;
+    min-height: 46px;
+    display: flex; align-items: center; justify-content: center;
   }
-  .ebtn:active { background: rgba(112,115,124,0.32); transform: scale(0.96); }
+  .ebtn:active { background: rgba(112,115,124,0.42); transform: scale(0.96); }
 
   /* ═══ ACTION LIST ═══ */
   .alist {
@@ -659,16 +672,16 @@
   .ainfo .ar { display: flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 600; color: var(--primary); }
   .ainfo .ar svg { width: 14px; height: 14px; }
   .abtn {
-    padding: 6px 14px; border-radius: 10px;
+    padding: 10px 16px; border-radius: 10px;
     border: none;
-    background: rgba(112,115,124,0.22);
+    background: rgba(112,115,124,0.32);
     backdrop-filter: blur(32px); -webkit-backdrop-filter: blur(32px);
-    font-family: inherit; font-size: 12px; font-weight: 600;
+    font-family: inherit; font-size: 13px; font-weight: 600;
     color: var(--label-normal); cursor: pointer;
     transition: all 0.15s; display: flex; align-items: center; justify-content: center; gap: 4px;
-    white-space: nowrap; flex-shrink: 0; min-width: 64px;
+    white-space: nowrap; flex-shrink: 0; min-width: 72px; min-height: 40px;
   }
-  .abtn:active { background: rgba(112,115,124,0.32); transform: scale(0.96); }
+  .abtn:active { background: rgba(112,115,124,0.42); transform: scale(0.96); }
 
   /* ═══ FOOTER ═══ */
   .footer {
@@ -781,12 +794,14 @@
   }
   .hist .tt { font-size: 14px; font-weight: 700; color: var(--label-strong); }
   .hist .vb {
-    padding: 6px 14px; border-radius: 10px;
+    padding: 10px 16px; border-radius: 10px;
     border: none;
-    background: rgba(112,115,124,0.22);
+    background: rgba(112,115,124,0.32);
     backdrop-filter: blur(32px); -webkit-backdrop-filter: blur(32px);
-    font-family: inherit; font-size: 12px; font-weight: 600;
+    font-family: inherit; font-size: 13px; font-weight: 600;
     color: var(--label-normal); cursor: pointer;
+    min-width: 72px; min-height: 40px;
+    display: inline-flex; align-items: center; justify-content: center;
   }
 
   /* ═══ ANIM ═══ */
@@ -1108,6 +1123,7 @@
     .free-hd { margin: 32px 0 18px; font-size: 20px; }
     .daily { margin: 0; padding: 28px 24px; border-radius: 20px; }
     .daily-hd .tt { font-size: 17px; }
+    .daily-hd .sub { font-size: 14px; }
     .day { padding: 14px 6px; border-radius: 14px; }
     .day-n { font-size: 13px; }
     .day-l { font-size: 10px; }
@@ -1115,15 +1131,17 @@
     .earn { margin: 20px 0 0; gap: 16px; }
     .ecard { padding: 24px; border-radius: 20px; }
     .ecard-t { font-size: 17px; }
-    .ebtn { padding: 10px; font-size: 14px; }
+    .ecard-s { font-size: 13px; }
+    .ebtn { padding: 14px; font-size: 15px; min-height: 50px; }
     .alist { margin: 20px 0 0; border-radius: 22px; }
     .aitem { padding: 20px 24px; }
     .ainfo .at { font-size: 16px; }
     .ainfo .ar { font-size: 13px; }
-    .abtn { padding: 8px 18px; font-size: 13px; }
+    .abtn { padding: 12px 20px; font-size: 14px; min-height: 44px; }
     .hist-row { margin: 20px 0 0; gap: 16px; }
     .hist { padding: 20px; border-radius: 18px; }
     .hist .tt { font-size: 16px; }
+    .hist .vb { padding: 12px 20px; font-size: 14px; min-height: 44px; }
     .footer { margin: 40px 0 0; }
     .footer p { font-size: 12px; }
     .roulette-wrap { width: 300px; height: 300px; margin: 16px auto 28px; }
@@ -1306,7 +1324,7 @@
   <div class="divider"></div>
 
   <!-- Buy Mir -->
-  <div class="sec-hd col ai d4">
+  <div class="sec-hd col ai d4" id="buy-mir">
     <h2>Buy Mir</h2>
     <p>Pay only for what you need (1 Mir per message)</p>
   </div>
@@ -1392,19 +1410,13 @@
 
   <div id="shopRewards" class="shop-panel hidden">
 
-  <!-- Free Mir -->
-  <div class="free-hd ai d9">
-    무료 미르 충전소
-  </div>
-
   <!-- Daily Roulette -->
+  <div class="daily-hd ai d9" style="margin:24px 16px 16px">
+    <span>🎰</span>
+    <span class="tt">일일 룰렛</span>
+    <span class="sub">(최대 300미르)</span>
+  </div>
   <div class="daily ai d9">
-    <div class="daily-hd">
-      <span>🎰</span>
-      <span class="tt">일일 룰렛</span>
-      <span class="sub">(최대 300미르)</span>
-    </div>
-
     <!-- Roulette Wheel -->
     <div class="roulette-wrap">
       <div class="roulette-outer"></div>
@@ -1464,7 +1476,13 @@
   </div>
 
   <!-- Earn -->
+  <div class="daily-hd ai d10" style="margin:24px 16px 16px">
+    <span>📋</span>
+    <span class="tt">일일 미션</span>
+    <span class="sub">(최대 160미르)</span>
+  </div>
   <div class="earn ai d10">
+    <!-- 임시 주석 — 광고 보기
     <div class="ecard">
       <div class="ecard-t">
         📺 광고 보기
@@ -1476,20 +1494,28 @@
       </div>
       <button class="ebtn">열기</button>
     </div>
-    <div class="ecard">
-      <div class="ecard-t">
-        📋 일일 작업
+    -->
+    <div class="ecard" style="grid-column:1/-1;flex-direction:row;align-items:center;gap:16px;padding:20px">
+      <div style="flex:1;min-width:0">
+        <div style="font-size:17px;font-weight:800;color:var(--label-strong);margin-bottom:6px">작업 진행 (0 / 6)</div>
+        <div style="font-size:12px;color:var(--label-alt);margin-bottom:12px">모든 임무를 완성하고 최대 160 미르를 받으세요!</div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <div class="ecard-bar" style="flex:1;margin:0"><div class="ecard-bar-fill" style="width:0%"></div></div>
+          <div style="display:flex;align-items:center;gap:4px;color:var(--label-strong);font-size:13px;font-weight:700">
+            <img src="images/mir.png" width="14" height="14" alt="미르" style="object-fit:contain">
+            <span>160</span>
+          </div>
+        </div>
       </div>
-      <div class="ecard-p">0 / 8</div>
-      <div class="ecard-s">
-        <img class="mi" src="images/mir.png" width="12" height="12" alt="Mir">
-        최대 116 개의 미르 획득
-      </div>
-      <a class="ebtn" href="daily-tasks.html">도전</a>
+      <a class="ebtn" href="daily-tasks.html" style="margin:0;width:auto;padding:12px 22px;flex-shrink:0">도전</a>
     </div>
   </div>
 
   <!-- Actions -->
+  <div class="daily-hd ai d10" style="margin:24px 16px 16px">
+    <span>🎁</span>
+    <span class="tt">리워드</span>
+  </div>
   <div class="alist ai d10">
     <div class="aitem" id="action-invite">
       <div class="ainfo">
@@ -1525,6 +1551,41 @@
         <div class="ar"><img class="mi" src="images/mir.png" width="14" height="14" alt="Mir">+3</div>
       </div>
       <button class="abtn" onclick="claimAction(this, '알림 활성화 완료!', 3)">열기</button>
+    </div>
+    <div class="aitem" id="action-character">
+      <div class="ainfo">
+        <div class="at">공개 캐릭터 1개 생성·발행</div>
+        <div class="ar"><img class="mi" src="images/mir.png" width="14" height="14" alt="Mir">+15</div>
+      </div>
+      <button class="abtn" onclick="claimAction(this, '캐릭터 발행 완료!', 15)">발행하기</button>
+    </div>
+    <div class="aitem" id="action-max">
+      <div class="ainfo">
+        <div class="at">MAX 첫 구독 시작</div>
+        <div class="ar"><img class="mi" src="images/mir.png" width="14" height="14" alt="Mir">+50</div>
+      </div>
+      <button class="abtn" onclick="claimAction(this, 'MAX 구독 시작!', 50)">구독하기</button>
+    </div>
+    <div class="aitem" id="action-mir-pkg">
+      <div class="ainfo">
+        <div class="at">미르 패키지 첫 구매</div>
+        <div class="ar"><img class="mi" src="images/mir.png" width="14" height="14" alt="Mir">+50</div>
+      </div>
+      <button class="abtn" onclick="claimAction(this, '미르 패키지 구매 완료!', 50)">구매하기</button>
+    </div>
+    <div class="aitem" id="action-rookie">
+      <div class="ainfo">
+        <div class="at">루키 크리에이터 등급 달성</div>
+        <div class="ar"><img class="mi" src="images/mir.png" width="14" height="14" alt="Mir">TBD</div>
+      </div>
+      <button class="abtn" disabled style="opacity:0.5;cursor:not-allowed">대기중</button>
+    </div>
+    <div class="aitem" id="action-pro">
+      <div class="ainfo">
+        <div class="at">프로 크리에이터 등급 달성</div>
+        <div class="ar"><img class="mi" src="images/mir.png" width="14" height="14" alt="Mir">TBD</div>
+      </div>
+      <button class="abtn" disabled style="opacity:0.5;cursor:not-allowed">대기중</button>
     </div>
     <div class="aitem">
       <div class="ainfo">
@@ -1809,6 +1870,25 @@
 
       if (isFirstSpin) {
         spun = true;
+        txt.textContent = '오늘 완료!';
+        btn.classList.remove('spin');  // shimmer 애니메이션 제거
+        btn.style.background = '#2E2F33';
+        btn.style.color = 'var(--label-alt)';
+        btn.disabled = true;
+        // 룰렛 숨김 (try 밖에서 보장)
+        setTimeout(() => {
+          const wrap = document.querySelector('.roulette-wrap');
+          if (!wrap) return;
+          wrap.style.transition = 'max-height 0.5s ease, opacity 0.4s ease, margin 0.5s ease';
+          wrap.style.maxHeight = '0';
+          wrap.style.opacity = '0';
+          wrap.style.margin = '0';
+          wrap.style.overflow = 'hidden';
+        }, 1500);
+      }
+      /* 임시 주석 — 광고 보고 다시 돌리기 로직
+      if (isFirstSpin) {
+        spun = true;
         btn.className = 'dbtn ad-retry';
         txt.textContent = '🎬 광고보고 다시돌리기 (0/3)';
         btn.disabled = false;
@@ -1822,6 +1902,7 @@
           btn.disabled = false;
         }
       }
+      */
 
       // 결과 연출 (실패해도 버튼은 이미 복구됨)
       try {
@@ -1841,18 +1922,7 @@
           todayDay.querySelector('svg').innerHTML = '<polyline points="8,16 14,22 24,10" fill="none" stroke="rgba(20,195,145,0.5)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>';
         }
 
-        // 3회 소진 시 룰렛 숨김
-        if (!isFirstSpin && adRetries <= 0) {
-          setTimeout(() => {
-            showSheet();
-            const wrap = document.querySelector('.roulette-wrap');
-            wrap.style.transition = 'max-height 0.5s ease, opacity 0.4s ease, margin 0.5s ease';
-            wrap.style.maxHeight = '0';
-            wrap.style.opacity = '0';
-            wrap.style.margin = '0';
-            wrap.style.overflow = 'hidden';
-          }, 1500);
-        }
+        // 룰렛 숨김 로직은 try 밖으로 이동됨 (에러 발생 시에도 보장)
       } catch (e) {
         console.error('룰렛 연출 에러:', e);
       }
