@@ -647,20 +647,19 @@
   }
   .ebtn:active { background: rgba(112,115,124,0.42); transform: scale(0.96); }
 
-  /* ═══ ACTION LIST ═══ */
+  /* ═══ ACTION LIST — 일일 미션과 동일한 개별 카드 리스트 ═══ */
   .alist {
     margin: 16px 16px 0;
-    border-radius: 20px; overflow: hidden;
-    background: linear-gradient(160deg, var(--bg-card-alt), var(--bg-card));
-    border: 1px solid var(--line-solid);
+    display: flex; flex-direction: column; gap: 8px;
   }
   .aitem {
-    display: flex; align-items: center; padding: 16px;
-    border-bottom: 1px solid rgba(255,255,255,0.03);
-    cursor: pointer; transition: background 0.15s;
+    display: flex; align-items: center; gap: 12px; padding: 16px;
+    background: linear-gradient(160deg, var(--bg-card-alt), var(--bg-card));
+    border: 1px solid var(--line-solid);
+    border-radius: 16px;
+    cursor: pointer; transition: background 0.2s, transform 0.2s, opacity 0.2s;
   }
-  .aitem:last-child { border-bottom: none; }
-  .aitem:active { background: rgba(255,255,255,0.03); }
+  .aitem:active { background: var(--fill-normal); transform: scale(0.99); }
   .ainfo { flex: 1; }
   .ainfo .at { font-size: 14px; font-weight: 600; color: var(--label-strong); margin-bottom: 8px; }
   .ainfo .ar { display: flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 600; color: var(--primary); }
@@ -676,6 +675,17 @@
     white-space: nowrap; flex-shrink: 0; min-width: 72px; min-height: 40px;
   }
   .abtn:active { background: rgba(112,115,124,0.42); transform: scale(0.96); }
+
+  /* 완료된 일회성 보상 — 카드는 또렷하게 유지, 완료 표시(취소선+버튼)만 + 맨 밑 정렬 */
+  .aitem.completed { order: 1; cursor: default; }
+  .aitem.completed .at { text-decoration: line-through; color: var(--label-neutral); }
+  .aitem.completed .ainfo .ar { color: var(--label-assist); }
+  .aitem.completed .abtn {
+    background: rgba(20,195,145,0.1);
+    color: var(--primary);
+    pointer-events: none;
+    backdrop-filter: none; -webkit-backdrop-filter: none;
+  }
 
   /* ═══ FOOTER ═══ */
   .footer {
@@ -1664,14 +1674,23 @@
 
   function claimAction(btn, msg, mir) {
     const item = btn.closest('.aitem');
+    if (item.classList.contains('completed')) return;
     showToast(msg, mir);
-    // Set max-height for smooth collapse
-    item.style.maxHeight = item.scrollHeight + 'px';
-    item.style.overflow = 'hidden';
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => item.classList.add('hiding'));
-    });
-    setTimeout(() => item.remove(), 400);
+    // 제거 대신 완료 상태로 전환 → order:1 로 맨 밑으로 이동 (일일 미션과 동일)
+    item.classList.add('completed');
+    btn.textContent = '완료';
+    btn.disabled = true;
+    refreshDoneDivider();
+  }
+
+  // 완료 섹션 맨 위 항목에 구분선 표시
+  function refreshDoneDivider() {
+    const list = document.querySelector('.alist');
+    if (!list) return;
+    list.querySelectorAll('.aitem.first-done').forEach(el => el.classList.remove('first-done'));
+    // order:1 로 시각상 맨 밑에 모인 완료 항목 중, DOM 순서상 첫 completed에 구분선
+    const done = list.querySelector('.aitem.completed');
+    if (done) done.classList.add('first-done');
   }
 
   function confetti() {
