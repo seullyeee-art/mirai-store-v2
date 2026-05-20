@@ -678,8 +678,8 @@
   }
   .abtn:active { background: rgba(112,115,124,0.42); transform: scale(0.96); }
 
-  /* 완료된 일회성 보상 — 카드는 또렷하게 유지, 완료 표시(취소선+버튼)만 + 맨 밑 정렬 */
-  .aitem.completed { order: 1; cursor: default; }
+  /* 완료된 일회성 보상 — 카드는 또렷하게 유지, 완료 표시(취소선+버튼)만. 맨 밑 정렬은 JS appendChild */
+  .aitem.completed { cursor: default; }
   .aitem.completed .at { text-decoration: line-through; color: var(--label-neutral); }
   .aitem.completed .ainfo .ar { color: var(--label-assist); }
   .aitem.completed .abtn {
@@ -1678,21 +1678,11 @@
     const item = btn.closest('.aitem');
     if (item.classList.contains('completed')) return;
     showToast(msg, mir);
-    // 제거 대신 완료 상태로 전환 → order:1 로 맨 밑으로 이동 (일일 미션과 동일)
+    // 완료 상태로 전환 + DOM 맨 끝으로 실제 이동 → 구분선(border-bottom/:last-child) 정상 유지
     item.classList.add('completed');
     btn.textContent = '완료';
     btn.disabled = true;
-    refreshDoneDivider();
-  }
-
-  // 완료 섹션 맨 위 항목에 구분선 표시
-  function refreshDoneDivider() {
-    const list = document.querySelector('.alist');
-    if (!list) return;
-    list.querySelectorAll('.aitem.first-done').forEach(el => el.classList.remove('first-done'));
-    // order:1 로 시각상 맨 밑에 모인 완료 항목 중, DOM 순서상 첫 completed에 구분선
-    const done = list.querySelector('.aitem.completed');
-    if (done) done.classList.add('first-done');
+    item.closest('.alist').appendChild(item);
   }
 
   function confetti() {
