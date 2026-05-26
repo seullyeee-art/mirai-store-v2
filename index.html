@@ -385,7 +385,7 @@
     border: 1px solid var(--line-solid);
   }
   .daily-hd { display: flex; align-items: center; gap: 6px; margin-bottom: 16px; }
-  .daily-hd .tt { font-size: 15px; font-weight: 700; color: var(--label-strong); }
+  .daily-hd .tt { font-size: 17px; font-weight: 800; color: var(--label-strong); }
   .daily-hd .sub { font-size: 13px; color: var(--label-alt); margin-left: 4px; }
 
   .days {
@@ -1127,7 +1127,7 @@
     .bns { font-size: 12px; }
     .pbtn { padding: 12px 0; font-size: 14px; border-radius: 12px; }
     .daily { margin: 0; padding: 28px 24px; border-radius: 20px; }
-    .daily-hd .tt { font-size: 17px; }
+    .daily-hd .tt { font-size: 20px; }
     .daily-hd .sub { font-size: 14px; }
     .day { padding: 14px 6px; border-radius: 14px; }
     .day-n { font-size: 13px; }
@@ -1197,46 +1197,26 @@
     position: relative;
     overflow: hidden;
     background:
-      radial-gradient(ellipse 240px 140px at 50% -10%, rgba(20,195,145,0.16) 0%, transparent 70%),
+      radial-gradient(ellipse 200px 120px at 50% 0%, rgba(20,195,145,0.08) 0%, transparent 60%),
       linear-gradient(160deg, var(--bg-card-alt), var(--bg-card));
-    border: 1px solid rgba(20,195,145,0.18);
+    border: 1px solid var(--line-solid);
   }
-  .quest-hd { margin: 0 0 16px; justify-content: center; }
-
-  .quest-timer {
-    display: flex; align-items: center; gap: 6px;
-    width: fit-content; margin: 0 auto 22px;
-    padding: 7px 14px;
+  /* 일일 미션 헤더 옆 타이머 (sub 자리) */
+  .quest-timer-inline {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: 4px;
+    padding: 5px 12px;
     border-radius: 999px;
     background: rgba(20,195,145,0.10);
-    border: 1px solid rgba(20,195,145,0.22);
     color: var(--label-neutral);
-    font-size: 12px; font-weight: 600;
+    font-size: 11px; font-weight: 600;
     letter-spacing: 0.01em;
-    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
   }
-  .quest-timer svg { width: 14px; height: 14px; color: var(--primary); }
-  .quest-timer span { color: var(--primary); font-weight: 800; font-variant-numeric: tabular-nums; }
-
-  /* 현재 점수 강조 박스 */
-  .quest-score-row {
-    display: flex; align-items: center; justify-content: space-between;
-    gap: 12px; margin: 0 0 18px; padding: 12px 16px;
-    border-radius: 14px;
-    background: linear-gradient(135deg, rgba(20,195,145,0.16), rgba(20,195,145,0.04));
-    border: 1px solid rgba(20,195,145,0.22);
+  .quest-timer-inline svg { width: 12px; height: 12px; color: var(--primary); }
+  .quest-timer-inline span { color: var(--primary); font-weight: 800; font-variant-numeric: tabular-nums; }
+  @media (min-width: 768px) {
+    .quest-card { margin: 16px 0 0; padding: 28px 24px; }
   }
-  .quest-score-now { display: flex; align-items: baseline; gap: 8px; }
-  .quest-score-label { font-size: 13px; font-weight: 600; color: var(--label-neutral); }
-  .quest-score-val { font-size: 14px; color: var(--label-alt); }
-  .quest-score-val strong {
-    font-size: 28px; font-weight: 800; color: var(--primary);
-    margin-right: 2px; letter-spacing: -0.02em;
-    font-variant-numeric: tabular-nums;
-  }
-  .quest-score-next { font-size: 12px; font-weight: 500; color: var(--label-alt); text-align: right; }
-  .quest-score-next strong { color: var(--primary); font-weight: 800; }
-
   .quest-track { position: relative; }
   .quest-gauge {
     position: absolute; left: 40px; right: 40px; top: 31px;
@@ -1296,7 +1276,7 @@
     font-variant-numeric: tabular-nums;
   }
   .quest-gift-mir img { object-fit: contain; width: 13px; height: 13px; }
-  .quest-gift-score { font-size: 10px; font-weight: 600; color: var(--label-alt); letter-spacing: 0.02em; }
+  .quest-gift-score { font-size: 12px; font-weight: 600; color: var(--label-alt); letter-spacing: 0.02em; }
 
   /* locked — 회색 선물상자 */
   .quest-gift.locked .quest-gift-icon { opacity: 0.9; }
@@ -1334,13 +1314,16 @@
     50% { opacity: 1; transform: scale(1); }
   }
 
-  /* claimed — 열림 + 체크 */
+  /* claimed — 열림 + 체크 (선물상자 녹→블루 그라톤 다크 버전) */
   .quest-gift.claimed .quest-gift-icon {
-    color: #3d8ff5;
-    background: #16222e;
-    border-color: rgba(61,143,245,0.32);
+    color: #28d0ed;
+    background:
+      linear-gradient(135deg, rgba(20,195,145,0.22), rgba(61,143,245,0.26)),
+      #15191e;
+    border-color: rgba(61,143,245,0.45);
     animation: questPop 0.4s cubic-bezier(0.34,1.56,0.64,1);
   }
+  .quest-gift.claimed .gift-check { stroke: url(#giftGrad); color: transparent; }
   .quest-gift.claimed .gift-closed { display: none; }
   .quest-gift.claimed .gift-check { display: block; }
   .quest-gift.claimed .quest-gift-mir { color: rgba(255,255,255,0.7); }
@@ -1359,11 +1342,14 @@
   .quest-gift.quest-start .quest-gift-score { color: var(--label-alt); }
   /* 미션 1개라도 완료하면 시작 깃발 활성화 (블루) */
   .quest-gift.quest-start.started .quest-gift-icon {
-    background: #16242f;
-    border-color: rgba(61,143,245,0.6);
-    color: #3d8ff5;
+    color: #28d0ed;
+    background:
+      linear-gradient(135deg, rgba(20,195,145,0.22), rgba(61,143,245,0.26)),
+      #15191e;
+    border-color: rgba(61,143,245,0.45);
   }
-  .quest-gift.quest-start.started .quest-gift-score { color: #3d8ff5; font-weight: 700; }
+  .quest-gift.quest-start.started .quest-gift-icon svg { fill: url(#giftGrad); color: transparent; }
+  .quest-gift.quest-start.started .quest-gift-score { color: #28d0ed; font-weight: 700; }
 
   .quest-hint {
     margin-top: 20px; text-align: center;
@@ -1390,6 +1376,21 @@
 
   /* 미션 점수 라벨 */
   .ar.quest-pt { color: var(--primary); font-weight: 700; }
+
+  /* 모바일 — 5개 선물상자가 좁은 폭에서 안 넘치도록 타이트하게 */
+  @media (max-width: 767px) {
+    .quest-card { padding: 18px 12px 16px; }
+    .quest-gifts { padding: 0 2px; }
+    .quest-gift { width: 58px; gap: 5px; }
+    .quest-gift-icon { width: 54px; height: 54px; border-radius: 14px; border-width: 1px; }
+    .quest-gift-icon svg { width: 40px; height: 40px; }
+    .quest-gift.quest-start .quest-gift-icon svg { width: 32px; height: 32px; }
+    .quest-gift-mir { font-size: 13px; }
+    .quest-gift-mir img { width: 11px; height: 11px; }
+    .quest-gift-score { font-size: 12px; }
+    .quest-gift-badge { font-size: 9px; padding: 2px 7px; top: -10px; }
+    .quest-gauge { left: 32px; right: 32px; top: 23px; height: 8px; }
+  }
 
   @media (prefers-reduced-motion: reduce) {
     .quest-gift.claimable .quest-gift-icon { animation: none; box-shadow: 0 0 0 2px var(--primary); }
@@ -1691,17 +1692,16 @@
     </div>
   </div>
 
-  <!-- 일일 미션 (퀘스트 — 점수 적립 + 마일스톤 선물상자) -->
-  <div class="quest-card ai d10">
-    <div class="daily-hd quest-hd">
-      <span>📋</span>
-      <span class="tt">일일 미션</span>
-    </div>
-    <div class="quest-timer">
+  <!-- 일일 미션 헤더 (룰렛/리워드와 동일, 왼쪽 정렬 + 옆에 타이머) -->
+  <div class="daily-hd ai d10" style="margin:24px 16px 16px">
+    <span>📋</span>
+    <span class="tt">일일 미션</span>
+    <span class="quest-timer-inline">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg>
-      다음 초기화까지 <span id="questTimer">--:--:--</span>
-    </div>
-
+      리셋까지 <span id="questTimer">--:--:--</span>
+    </span>
+  </div>
+  <div class="quest-card ai d10">
     <div class="quest-track">
       <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
         <linearGradient id="giftGrad" x1="0" y1="0" x2="1" y2="1">
@@ -2026,20 +2026,8 @@
     const start = document.querySelector('.quest-start');
     if (start) start.classList.toggle('started', questScore > 0);
 
-    // 현재 점수
-    const nowEl = document.getElementById('questScoreNow');
-    if (nowEl) nowEl.textContent = questScore;
-
-    // 다음 목표 안내
-    const hasClaimable = MILESTONES.some((m, i) => questScore >= m.score && !claimedMs.has(i));
-    const next = MILESTONES.find((m, i) => !claimedMs.has(i) && questScore < m.score);
-    const nextEl = document.getElementById('questNext');
-    if (nextEl) {
-      if (next) nextEl.innerHTML = `다음 선물상자까지 <strong>${next.score - questScore}</strong>점`;
-      else nextEl.innerHTML = '';
-    }
-
     // 안내 문구
+    const hasClaimable = MILESTONES.some((m, i) => questScore >= m.score && !claimedMs.has(i));
     const hint = document.getElementById('questHint');
     if (hint) {
       hint.textContent = hasClaimable
