@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>MIRAI 스토어</title>
+<title>MIRAI 미르</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/seullyeee-art/mirai-shared@main/styles.css">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -303,13 +303,13 @@
   .max-note { font-size: 11px; color: var(--label-assist); margin-top: 10px; text-align: center; }
   .max-cta {
     width: 100%; padding: 12px; border-radius: 10px; border: none;
-    background: rgba(112,115,124,0.22);
+    background: #474A4D;
     backdrop-filter: blur(32px); -webkit-backdrop-filter: blur(32px);
     font-family: inherit;
     font-size: 14px; font-weight: 600; color: var(--label-normal);
     cursor: pointer; transition: all 0.2s;
   }
-  .max-cta:active { transform: scale(0.98); background: rgba(112,115,124,0.32); }
+  .max-cta:active { transform: scale(0.98); background: #474A4D; }
 
   /* ═══ SECTION HEADER ═══ */
   .sec-hd { padding: 16px 16px 8px; display: flex; align-items: center; justify-content: space-between; }
@@ -362,18 +362,18 @@
 
   .pbtn {
     width: 100%; padding: 10px 0; border-radius: 10px;
-    border: none; background: rgba(112,115,124,0.22);
+    border: none; background: #474A4D;
     backdrop-filter: blur(32px); -webkit-backdrop-filter: blur(32px);
     font-family: inherit; font-size: 12px; font-weight: 700;
     color: var(--label-normal); cursor: pointer; transition: all 0.15s;
     margin-top: auto;
   }
-  .pbtn:active { background: rgba(112,115,124,0.32); transform: scale(0.96); }
+  .pbtn:active { background: #474A4D; transform: scale(0.96); }
   .prem .pbtn {
-    background: rgba(112,115,124,0.22);
+    background: #474A4D;
     color: var(--label-normal); border: none;
   }
-  .prem .pbtn:active { background: rgba(112,115,124,0.32); }
+  .prem .pbtn:active { background: #474A4D; }
 
   /* ═══ DAILY ROULETTE ═══ */
   .daily {
@@ -582,7 +582,7 @@
     animation: shimmer 2.2s ease-in-out infinite;
   }
   .dbtn.ad-retry {
-    background: rgba(112,115,124,0.22);
+    background: #474A4D;
     backdrop-filter: blur(32px); -webkit-backdrop-filter: blur(32px);
     border: none;
     color: var(--label-neutral); font-size: 13px;
@@ -637,7 +637,7 @@
   .ebtn {
     margin-top: 6px; padding: 12px; border-radius: 12px;
     border: none;
-    background: rgba(112,115,124,0.32);
+    background: #474A4D;
     backdrop-filter: blur(32px); -webkit-backdrop-filter: blur(32px);
     font-family: inherit; font-size: 14px; font-weight: 700;
     color: var(--label-normal); cursor: pointer; transition: all 0.15s;
@@ -669,7 +669,7 @@
   .abtn {
     padding: 10px 16px; border-radius: 10px;
     border: none;
-    background: rgba(112,115,124,0.32);
+    background: #474A4D;
     backdrop-filter: blur(32px); -webkit-backdrop-filter: blur(32px);
     font-family: inherit; font-size: 13px; font-weight: 600;
     color: var(--label-normal); cursor: pointer;
@@ -677,6 +677,14 @@
     white-space: nowrap; flex-shrink: 0; min-width: 72px; min-height: 40px;
   }
   .abtn:active { background: rgba(112,115,124,0.42); transform: scale(0.96); }
+  .abtn.claimable {
+    background:
+      linear-gradient(135deg, rgba(20,195,145,0.22), rgba(61,143,245,0.26)),
+      #15191e;
+    border: 1px solid rgba(61,143,245,0.45);
+    box-shadow: 0 0 0 2px rgba(20,195,145,0.12), 0 10px 24px rgba(0,0,0,0.35);
+  }
+  .abtn.claimable:active { background: #15191e; }
 
   /* 완료된 일회성 보상 — 카드는 또렷하게 유지, 완료 표시(취소선+버튼)만. 맨 밑 정렬은 JS appendChild */
   .aitem.completed { cursor: default; }
@@ -802,7 +810,7 @@
   .hist .vb {
     padding: 10px 16px; border-radius: 10px;
     border: none;
-    background: rgba(112,115,124,0.32);
+    background: #474A4D;
     backdrop-filter: blur(32px); -webkit-backdrop-filter: blur(32px);
     font-family: inherit; font-size: 13px; font-weight: 600;
     color: var(--label-normal); cursor: pointer;
@@ -1219,7 +1227,8 @@
   }
   .quest-track { position: relative; }
   .quest-gauge {
-    position: absolute; left: 40px; right: 40px; top: 31px;
+    /* Align to gift icon centers (80px column, 68px icon, 10px gauge) */
+    position: absolute; left: 40px; right: 40px; top: 29px;
     height: 10px; border-radius: 5px;
     background: rgba(255,255,255,0.07);
     box-shadow: inset 0 1px 3px rgba(0,0,0,0.4);
@@ -1352,12 +1361,26 @@
   .quest-gift.quest-start.started .quest-gift-score { color: #28d0ed; font-weight: 700; }
 
   .quest-hint {
-    margin-top: 20px; text-align: center;
+    margin-top: 10px; text-align: center;
     font-size: 12px; color: var(--label-alt);
     line-height: 1.5; letter-spacing: 0.01em;
     transition: color 0.2s ease;
   }
-  .quest-hint.active { color: var(--primary); font-weight: 700; font-size: 13px; }
+  .quest-hint.active { color: var(--primary); font-weight: 700; }
+  .quest-hint .hint-short { display: none; }
+  .quest-hint .hint-full { display: inline; }
+  .quest-progress {
+    margin-top: 12px;
+    margin-bottom: 2px;
+    text-align: center;
+    font-size: 12px;
+    color: rgba(174, 176, 182, 0.78);
+    font-weight: 700;
+    letter-spacing: 0.01em;
+  }
+  .quest-progress #questScoreNow { color: var(--label-normal); }
+  .quest-progress #questScoreMax { color: var(--label-alt); font-weight: 800; }
+  .quest-progress .qsep { margin: 0 6px; color: rgba(255,255,255,0.18); }
 
   /* 한 박스 통합 — 구분선 + 미션 리스트 */
   .quest-divider {
@@ -1377,7 +1400,7 @@
   /* 미션 점수 라벨 */
   .ar.quest-pt { color: var(--primary); font-weight: 700; }
 
-  /* 모바일 — 5개 선물상자가 좁은 폭에서 안 넘치도록 타이트하게 */
+  /* 모바일 — 선물상자가 좁은 폭에서 안 넘치도록 타이트하게 */
   @media (max-width: 767px) {
     .quest-card { padding: 18px 12px 16px; }
     .quest-gifts { padding: 0 2px; }
@@ -1390,6 +1413,17 @@
     .quest-gift-score { font-size: 12px; }
     .quest-gift-badge { font-size: 9px; padding: 2px 7px; top: -10px; }
     .quest-gauge { left: 32px; right: 32px; top: 23px; height: 8px; }
+    .quest-hint {
+      margin-top: 6px;
+      font-size: 11px;
+      line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .quest-progress { margin-top: 10px; margin-bottom: 0; }
+    .quest-hint .hint-full { display: none; }
+    .quest-hint .hint-short { display: inline; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -1456,7 +1490,7 @@
       <a class="back-btn" href="../mirai-home/index.html" aria-label="홈으로">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
       </a>
-      <h1>스토어</h1>
+      <h1>미르</h1>
       <div class="bal">
         <img class="mi" src="images/mir.png" width="22" height="22" alt="Mir">
         <span>996,499</span>
@@ -1722,7 +1756,7 @@
             <svg class="gift-closed" viewBox="0 0 24 24" fill="none"><rect x="4" y="10.5" width="16" height="10.5" rx="1.5" fill="url(#giftGrad)"/><rect x="4" y="10.5" width="16" height="3" fill="#2a7de0" opacity="0.45"/><rect x="2.5" y="6.5" width="19" height="4.6" rx="1.5" fill="#2fd6c4"/><rect x="9.7" y="6.5" width="4.6" height="14.5" fill="#eafff8"/><circle cx="8.4" cy="4.7" r="2.4" fill="none" stroke="#eafff8" stroke-width="1.9"/><circle cx="15.6" cy="4.7" r="2.4" fill="none" stroke="#eafff8" stroke-width="1.9"/></svg>
             <svg class="gift-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
           </span>
-          <span class="quest-gift-mir"><img src="images/mir.png" width="11" height="11" alt="">20</span>
+          <span class="quest-gift-mir"><img src="images/mir.png" width="11" height="11" alt="">15</span>
           <span class="quest-gift-score">20점</span>
         </button>
         <button class="quest-gift locked" id="gift1" type="button" onclick="claimMilestone(1)">
@@ -1730,7 +1764,7 @@
             <svg class="gift-closed" viewBox="0 0 24 24" fill="none"><rect x="4" y="10.5" width="16" height="10.5" rx="1.5" fill="url(#giftGrad)"/><rect x="4" y="10.5" width="16" height="3" fill="#2a7de0" opacity="0.45"/><rect x="2.5" y="6.5" width="19" height="4.6" rx="1.5" fill="#2fd6c4"/><rect x="9.7" y="6.5" width="4.6" height="14.5" fill="#eafff8"/><circle cx="8.4" cy="4.7" r="2.4" fill="none" stroke="#eafff8" stroke-width="1.9"/><circle cx="15.6" cy="4.7" r="2.4" fill="none" stroke="#eafff8" stroke-width="1.9"/></svg>
             <svg class="gift-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
           </span>
-          <span class="quest-gift-mir"><img src="images/mir.png" width="11" height="11" alt="">30</span>
+          <span class="quest-gift-mir"><img src="images/mir.png" width="11" height="11" alt="">20</span>
           <span class="quest-gift-score">40점</span>
         </button>
         <button class="quest-gift locked" id="gift2" type="button" onclick="claimMilestone(2)">
@@ -1738,7 +1772,7 @@
             <svg class="gift-closed" viewBox="0 0 24 24" fill="none"><rect x="4" y="10.5" width="16" height="10.5" rx="1.5" fill="url(#giftGrad)"/><rect x="4" y="10.5" width="16" height="3" fill="#2a7de0" opacity="0.45"/><rect x="2.5" y="6.5" width="19" height="4.6" rx="1.5" fill="#2fd6c4"/><rect x="9.7" y="6.5" width="4.6" height="14.5" fill="#eafff8"/><circle cx="8.4" cy="4.7" r="2.4" fill="none" stroke="#eafff8" stroke-width="1.9"/><circle cx="15.6" cy="4.7" r="2.4" fill="none" stroke="#eafff8" stroke-width="1.9"/></svg>
             <svg class="gift-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
           </span>
-          <span class="quest-gift-mir"><img src="images/mir.png" width="11" height="11" alt="">50</span>
+          <span class="quest-gift-mir"><img src="images/mir.png" width="11" height="11" alt="">20</span>
           <span class="quest-gift-score">60점</span>
         </button>
         <button class="quest-gift locked" id="gift3" type="button" onclick="claimMilestone(3)">
@@ -1746,12 +1780,20 @@
             <svg class="gift-closed" viewBox="0 0 24 24" fill="none"><rect x="4" y="10.5" width="16" height="10.5" rx="1.5" fill="url(#giftGrad)"/><rect x="4" y="10.5" width="16" height="3" fill="#2a7de0" opacity="0.45"/><rect x="2.5" y="6.5" width="19" height="4.6" rx="1.5" fill="#2fd6c4"/><rect x="9.7" y="6.5" width="4.6" height="14.5" fill="#eafff8"/><circle cx="8.4" cy="4.7" r="2.4" fill="none" stroke="#eafff8" stroke-width="1.9"/><circle cx="15.6" cy="4.7" r="2.4" fill="none" stroke="#eafff8" stroke-width="1.9"/></svg>
             <svg class="gift-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
           </span>
-          <span class="quest-gift-mir"><img src="images/mir.png" width="11" height="11" alt="">100</span>
-          <span class="quest-gift-score">80점</span>
+          <span class="quest-gift-mir"><img src="images/mir.png" width="11" height="11" alt="">25</span>
+          <span class="quest-gift-score">100점</span>
         </button>
       </div>
     </div>
-    <div class="quest-hint" id="questHint">미션을 완료하면 점수가 쌓이고, 선물상자에 도달하면 미르를 받을 수 있어요!</div>
+    <div class="quest-progress" aria-live="polite">
+      <span>현재</span> <span id="questScoreNow">0</span><span>점</span>
+      <span class="qsep">/</span>
+      <span id="questScoreMax">100</span><span>점</span>
+    </div>
+    <div class="quest-hint" id="questHint">
+      <span class="hint-full">미션 완료해서 점수를 모으세요</span>
+      <span class="hint-short">미션 완료해서 점수를 모으세요</span>
+    </div>
 
     <div class="quest-divider"></div>
 
@@ -1760,51 +1802,44 @@
     <div class="aitem">
       <div class="ainfo">
         <div class="at">대화 10라운드 완료</div>
-        <div class="ar quest-pt">+10점</div>
+        <div class="ar quest-pt">+15점</div>
       </div>
-      <button class="abtn" onclick="completeMission(this, 10)">완료하기</button>
+      <button class="abtn" data-mission="chat10" data-target="10" data-points="15" onclick="onChatMissionClick(this)">0/10</button>
     </div>
     <div class="aitem">
       <div class="ainfo">
         <div class="at">대화 30라운드 완료</div>
-        <div class="ar quest-pt">+10점</div>
+        <div class="ar quest-pt">+15점</div>
       </div>
-      <button class="abtn" onclick="completeMission(this, 10)">완료하기</button>
-    </div>
-    <div class="aitem">
-      <div class="ainfo">
-        <div class="at">대화 50라운드 완료</div>
-        <div class="ar quest-pt">+10점</div>
-      </div>
-      <button class="abtn" onclick="completeMission(this, 10)">완료하기</button>
+      <button class="abtn" data-mission="chat30" data-target="30" data-points="15" onclick="onChatMissionClick(this)">0/30</button>
     </div>
     <div class="aitem">
       <div class="ainfo">
         <div class="at">댓글 1개 작성</div>
-        <div class="ar quest-pt">+10점</div>
+        <div class="ar quest-pt">+20점</div>
       </div>
-      <button class="abtn" onclick="completeMission(this, 10)">완료하기</button>
+      <button class="abtn" data-mission="comment1" data-points="20" onclick="onSimpleMissionClick(this)">0/1</button>
+    </div>
+    <div class="aitem">
+      <div class="ainfo">
+        <div class="at">앨범 1개 열기</div>
+        <div class="ar quest-pt">+15점</div>
+      </div>
+      <button class="abtn" data-mission="openAlbum" data-points="15" onclick="onSimpleMissionClick(this)">0/1</button>
     </div>
     <div class="aitem">
       <div class="ainfo">
         <div class="at">새 캐릭터와 대화 시작</div>
-        <div class="ar quest-pt">+10점</div>
+        <div class="ar quest-pt">+15점</div>
       </div>
-      <button class="abtn" onclick="completeMission(this, 10)">완료하기</button>
+      <button class="abtn" data-mission="newChat" data-points="15" onclick="onSimpleMissionClick(this)">0/1</button>
     </div>
     <div class="aitem">
       <div class="ainfo">
-        <div class="at">갤러리/컷씬 1개 열기</div>
-        <div class="ar quest-pt">+10점</div>
-      </div>
-      <button class="abtn" onclick="completeMission(this, 10)">완료하기</button>
-    </div>
-    <div class="aitem">
-      <div class="ainfo">
-        <div class="at">모든 일일 미션 완료 보너스</div>
+        <div class="at">유료 상품 1회 구매</div>
         <div class="ar quest-pt">+20점</div>
       </div>
-      <button class="abtn" onclick="completeMission(this, 20)">완료하기</button>
+      <button class="abtn" data-mission="paid1" data-points="20" onclick="onSimpleMissionClick(this)">0/1</button>
     </div>
     </div><!-- /.quest-missions -->
   </div><!-- /.quest-card -->
@@ -1980,14 +2015,113 @@
 
   // ═══ 일일 미션 퀘스트 (점수 적립 → 마일스톤 선물상자) ═══
   let questScore = 0;
-  const QUEST_MAX = 80;                                  // 미션 6×10 + 보너스 20
+  let chatRounds = 0;
+  const QUEST_MAX = 100;                                 // 100점 만점
   const MILESTONES = [                                   // 누적 점수 → 미르
-    { score: 20, mir: 20 },
-    { score: 40, mir: 30 },
-    { score: 60, mir: 50 },
-    { score: 80, mir: 100 },
+    { score: 20, mir: 15 },
+    { score: 40, mir: 20 },
+    { score: 60, mir: 20 },
+    { score: 100, mir: 25 },
   ];
   const claimedMs = new Set();
+  const readyMissions = new Set();
+
+  function setBtnState(btn, state, targetText) {
+    if (!btn) return;
+    if (state === 'done') {
+      btn.classList.remove('claimable');
+      btn.dataset.phase = 'done';
+      btn.textContent = '완료';
+      btn.disabled = true;
+      return;
+    }
+    if (state === 'claimable') {
+      btn.classList.add('claimable');
+      btn.dataset.phase = 'claimable';
+      btn.textContent = '완료하기';
+      btn.disabled = false;
+      return;
+    }
+    btn.classList.remove('claimable');
+    btn.dataset.phase = 'progress';
+    btn.textContent = targetText || '0/1';
+    btn.disabled = false;
+  }
+
+  function renderChatMissions() {
+    const btns = document.querySelectorAll('button.abtn[data-mission^="chat"][data-target]');
+    btns.forEach((btn) => {
+      const item = btn.closest('.aitem');
+      if (!item) return;
+
+      if (item.classList.contains('completed')) {
+        setBtnState(btn, 'done');
+        return;
+      }
+
+      const target = Number(btn.dataset.target || 0);
+      if (target > 0 && chatRounds >= target) {
+        setBtnState(btn, 'claimable');
+      } else {
+        setBtnState(btn, 'progress', `0/${target || 0}`);
+      }
+    });
+  }
+
+  // 대화 미션: 0/n(진행) → 완료하기(클레임) → 완료(디세이블)
+  function onChatMissionClick(btn) {
+    const item = btn.closest('.aitem');
+    if (!item || item.classList.contains('completed')) return;
+
+    const target = Number(btn.dataset.target || 0);
+    const points = Number(btn.dataset.points || 0);
+    const phase = btn.dataset.phase || (btn.textContent.trim() === '완료하기' ? 'claimable' : 'progress');
+
+    if (phase !== 'claimable') {
+      chatRounds = Math.max(chatRounds, target);
+      renderChatMissions();
+      return;
+    }
+
+    completeMission(btn, points);
+    renderChatMissions();
+  }
+
+  function renderSimpleMissions() {
+    const btns = document.querySelectorAll('button.abtn[data-mission]:not([data-mission^="chat"])');
+
+    btns.forEach((btn) => {
+      const item = btn.closest('.aitem');
+      if (!item) return;
+
+      const mission = btn.dataset.mission || '';
+      if (item.classList.contains('completed')) {
+        setBtnState(btn, 'done');
+        return;
+      }
+
+      if (readyMissions.has(mission)) setBtnState(btn, 'claimable');
+      else setBtnState(btn, 'progress', '0/1');
+    });
+  }
+
+  function onSimpleMissionClick(btn) {
+    const item = btn.closest('.aitem');
+    if (!item || item.classList.contains('completed')) return;
+
+    const mission = btn.dataset.mission || '';
+    const points = Number(btn.dataset.points || 0);
+    const phase = btn.dataset.phase || (btn.textContent.trim() === '완료하기' ? 'claimable' : 'progress');
+
+    if (phase !== 'claimable') {
+      readyMissions.add(mission);
+      renderSimpleMissions();
+      return;
+    }
+
+    completeMission(btn, points);
+    renderSimpleMissions();
+  }
 
   // 미션 완료 → 점수 적립
   function completeMission(btn, points) {
@@ -2005,6 +2139,11 @@
   function updateQuest() {
     const fill = document.getElementById('questGauge');
     if (fill) fill.style.width = Math.min(questScore / QUEST_MAX * 100, 100) + '%';
+    const nowEl = document.getElementById('questScoreNow');
+    const maxEl = document.getElementById('questScoreMax');
+    if (nowEl) nowEl.textContent = String(questScore);
+    if (maxEl) maxEl.textContent = String(QUEST_MAX);
+
     MILESTONES.forEach((m, i) => {
       const gift = document.getElementById('gift' + i);
       if (!gift) return;
@@ -2030,17 +2169,24 @@
     const hasClaimable = MILESTONES.some((m, i) => questScore >= m.score && !claimedMs.has(i));
     const hint = document.getElementById('questHint');
     if (hint) {
-      hint.textContent = hasClaimable
-        ? '선물상자를 눌러 보상을 수령하세요!'
-        : '미션을 완료하면 점수가 쌓이고, 선물상자에 도달하면 미르를 받을 수 있어요!';
+      const full = hint.querySelector('.hint-full');
+      const short = hint.querySelector('.hint-short');
+      const msg = hasClaimable
+        ? { full: '선물상자를 눌러 보상을 수령하세요!', short: '상자를 눌러 미르 수령하기!' }
+        : { full: '미션 완료해서 점수를 모으세요', short: '미션 완료해서 점수를 모으세요' };
+      if (full) full.textContent = msg.full;
+      if (short) short.textContent = msg.short;
       hint.classList.toggle('active', hasClaimable);
     }
+
+    // 미션 버튼 상태도 함께 갱신 (특히 allBonus 조건)
+    renderSimpleMissions();
   }
 
   // 선물상자 클릭 → 미르 수령
   function claimMilestone(i) {
     const m = MILESTONES[i];
-    if (questScore < m.score || claimedMs.has(i)) return;   // 미달 or 이미 수령
+    if (!m || questScore < m.score || claimedMs.has(i)) return;   // 미달 or 이미 수령
     claimedMs.add(i);
     const gift = document.getElementById('gift' + i);
     if (gift) confetti(gift);                               // 선물상자 위치에서 이펙트 터짐
@@ -2066,6 +2212,8 @@
   }
   initQuestTimer();
   updateQuest();
+  renderChatMissions();
+  renderSimpleMissions();
 
   function confetti(centerEl) {
     const container = centerEl || document.querySelector('.roulette-wrap');
