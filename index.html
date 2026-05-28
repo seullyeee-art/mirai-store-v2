@@ -2030,6 +2030,7 @@
 	  const claimedMs = new Set();
 	  const readyMissions = new Set();
 	  let questGaugeAligned = false;
+	  let questGaugeAnchors = null;
 
 	  // 게이지 트랙을 "시작" 아이콘 중심 ~ 마지막 선물상자 아이콘 중심에 맞춰 정렬
 	  function alignQuestGauge() {
@@ -2053,6 +2054,47 @@
 	    track.style.setProperty('--quest-gauge-left-m', left.toFixed(2) + 'px');
 	    track.style.setProperty('--quest-gauge-right-m', right.toFixed(2) + 'px');
 	    questGaugeAligned = true;
+
+	    // Build anchor map (score -> x position) based on actual gift icon centers.
+	    // This keeps progress fill aligned between 20/40/60/100 boxes (e.g., 50 is between 40 and 60).
+	    const anchors = [{ score: 0, x: startCenter }];
+	    MILESTONES.forEach((m, i) => {
+	      const giftIcon = document.querySelector('#gift' + i + ' .quest-gift-icon');
+	      if (!giftIcon) return;
+	      const r = giftIcon.getBoundingClientRect();
+	      const center = (r.left + r.right) / 2 - tr.left;
+	      anchors.push({ score: m.score, x: center });
+	    });
+	    anchors.sort((a, b) => a.score - b.score);
+	    questGaugeAnchors = anchors;
+	  }
+
+	  function scoreToGaugePercent(score) {
+	    const gauge = document.querySelector('.quest-gauge');
+	    const track = document.querySelector('.quest-track');
+	    if (!gauge || !track || !questGaugeAnchors || questGaugeAnchors.length < 2) {
+	      return Math.min(Math.max(score / QUEST_MAX * 100, 0), 100);
+	    }
+	    const gr = gauge.getBoundingClientRect();
+	    if (!gr.width) return 0;
+
+	    const s = Math.min(Math.max(score, 0), QUEST_MAX);
+
+	    // Find segment [a, b] where a.score <= s <= b.score
+	    let a = questGaugeAnchors[0];
+	    let b = questGaugeAnchors[questGaugeAnchors.length - 1];
+	    for (let i = 0; i < questGaugeAnchors.length - 1; i++) {
+	      const cur = questGaugeAnchors[i];
+	      const next = questGaugeAnchors[i + 1];
+	      if (s >= cur.score && s <= next.score) { a = cur; b = next; break; }
+	    }
+	    const t = (b.score === a.score) ? 0 : (s - a.score) / (b.score - a.score);
+	    const x = a.x + (b.x - a.x) * t; // position along track (track-local)
+
+	    // Gauge itself starts at --quest-gauge-left (track-local). Convert x to gauge-local.
+	    const leftPx = parseFloat(getComputedStyle(track).getPropertyValue('--quest-gauge-left')) || 0;
+	    const xInGauge = Math.max(0, Math.min(x - leftPx, gr.width));
+	    return (xInGauge / gr.width) * 100;
 	  }
 
   function setBtnState(btn, state, targetText) {
@@ -2169,11 +2211,11 @@
 	    // 첫 렌더 및 리사이즈 이후, 게이지 정렬 먼저 맞춘 뒤 fill 업데이트
 	    if (!questGaugeAligned) alignQuestGauge();
 	    const fill = document.getElementById('questGauge');
-	    if (fill) fill.style.width = Math.min(questScore / QUEST_MAX * 100, 100) + '%';
+	    if (fill) fill.style.width = scoreToGaugePercent(questScore).toFixed(4) + '%';
 	    const nowEl = document.getElementById('questScoreNow');
 	    const maxEl = document.getElementById('questScoreMax');
-    if (nowEl) nowEl.textContent = String(questScore);
-    if (maxEl) maxEl.textContent = String(QUEST_MAX);
+	    if (nowEl) nowEl.textContent = String(questScore);
+	    if (maxEl) maxEl.textContent = String(QUEST_MAX);
 
     MILESTONES.forEach((m, i) => {
       const gift = document.getElementById('gift' + i);
@@ -2246,7 +2288,7 @@
   }
 	  initQuestTimer();
 	  // 반응형 레이아웃에서 상자 위치가 바뀌면 게이지도 즉시 재정렬
-	  window.addEventListener('resize', () => { questGaugeAligned = false; updateQuest(); }, { passive: true });
+	  window.addEventListener('resize', () => { questGaugeAligned = false; questGaugeAnchors = null; updateQuest(); }, { passive: true });
 	  updateQuest();
 	  renderChatMissions();
 	  renderSimpleMissions();
