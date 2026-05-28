@@ -1366,13 +1366,14 @@
   .quest-gift.quest-start.started .quest-gift-icon svg { fill: url(#giftGrad); color: transparent; }
   .quest-gift.quest-start.started .quest-gift-score { color: #28d0ed; font-weight: 700; }
 
-  .quest-hint {
-    margin-top: 10px; text-align: center;
-    font-size: 12px; color: var(--label-alt);
-    line-height: 1.5; letter-spacing: 0.01em;
-    transition: color 0.2s ease;
-  }
-  .quest-hint.active { color: var(--primary); font-weight: 700; }
+	  .quest-hint {
+	    margin-top: 10px; text-align: center;
+	    /* Match size/weight with the score line (quest-progress) */
+	    font-size: 12px; font-weight: 700; color: var(--label-alt);
+	    line-height: 1.5; letter-spacing: 0.01em;
+	    transition: color 0.2s ease;
+	  }
+	  .quest-hint.active { color: var(--primary); font-weight: 700; }
   .quest-hint .hint-short { display: none; }
   .quest-hint .hint-full { display: inline; }
   .quest-progress {
@@ -1421,12 +1422,12 @@
 	    .quest-gauge { left: var(--quest-gauge-left-m, 32px); right: var(--quest-gauge-right-m, 32px); top: 23px; height: 8px; }
 	    .quest-hint {
 	      margin-top: 6px;
-	      font-size: 11px;
+	      font-size: 12px;
 	      line-height: 1.2;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+	      white-space: nowrap;
+	      overflow: hidden;
+	      text-overflow: ellipsis;
+	    }
     .quest-progress { margin-top: 10px; margin-bottom: 0; }
     .quest-hint .hint-full { display: none; }
     .quest-hint .hint-short { display: inline; }
