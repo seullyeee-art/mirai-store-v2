@@ -2055,7 +2055,6 @@
 	    track.style.setProperty('--quest-gauge-right', right.toFixed(2) + 'px');
 	    track.style.setProperty('--quest-gauge-left-m', left.toFixed(2) + 'px');
 	    track.style.setProperty('--quest-gauge-right-m', right.toFixed(2) + 'px');
-	    questGaugeAligned = true;
 
 	    // Build anchor map (score -> x position) based on actual gift icon centers.
 	    // This keeps progress fill aligned between 20/40/60/100 boxes (e.g., 50 is between 40 and 60).
@@ -2068,14 +2067,30 @@
 	      anchors.push({ score: m.score, x: center });
 	    });
 	    anchors.sort((a, b) => a.score - b.score);
+	    // If layout isn't ready yet (rare on initial load), anchor x values may all be 0.
+	    // In that case, keep questGaugeAligned=false so updateQuest retries on the next frame.
+	    const span = endCenter - startCenter;
+	    const hasMeaningfulAnchors = span > 8 && anchors.some((p) => p.x > 1);
+	    if (!hasMeaningfulAnchors) {
+	      questGaugeAnchors = null;
+	      questGaugeAligned = false;
+	      return;
+	    }
 	    questGaugeAnchors = anchors;
+	    questGaugeAligned = true;
 	  }
 
 	  function scoreToGaugePercent(score) {
 	    const gauge = document.querySelector('.quest-gauge');
 	    const track = document.querySelector('.quest-track');
 	    if (!gauge || !track || !questGaugeAnchors || questGaugeAnchors.length < 2) {
-	      return Math.min(Math.max(score / QUEST_MAX * 100, 0), 100);
+	      // One more chance: if we haven't got anchors yet, try aligning again after layout.
+	      if (!questGaugeAligned) {
+	        alignQuestGauge();
+	      }
+	      if (!questGaugeAnchors || questGaugeAnchors.length < 2) {
+	        return Math.min(Math.max(score / QUEST_MAX * 100, 0), 100);
+	      }
 	    }
 	    const gr = gauge.getBoundingClientRect();
 	    if (!gr.width) return 0;
