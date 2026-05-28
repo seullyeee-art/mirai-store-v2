@@ -1225,15 +1225,19 @@
   @media (min-width: 768px) {
     .quest-card { margin: 16px 0 0; padding: 28px 24px; }
   }
-  .quest-track { position: relative; }
-  .quest-gauge {
-    /* Align to gift icon centers (80px column, 68px icon, 10px gauge) */
-    position: absolute; left: 40px; right: 40px; top: 29px;
-    height: 10px; border-radius: 5px;
-    background: rgba(255,255,255,0.07);
-    box-shadow: inset 0 1px 3px rgba(0,0,0,0.4);
-    overflow: hidden; z-index: 0;
-  }
+	  .quest-track { position: relative; }
+	  .quest-gauge {
+	    /*
+	      Gift positions are responsive (flex space-between), so the gauge must
+	      be aligned at runtime to the actual icon centers to keep
+	      "현재 n점 / 100점" and filled amount in sync.
+	    */
+	    position: absolute; left: var(--quest-gauge-left, 40px); right: var(--quest-gauge-right, 40px); top: 29px;
+	    height: 10px; border-radius: 5px;
+	    background: rgba(255,255,255,0.07);
+	    box-shadow: inset 0 1px 3px rgba(0,0,0,0.4);
+	    overflow: hidden; z-index: 0;
+	  }
   .quest-gauge-fill {
     position: relative;
     height: 100%; width: 0%;
@@ -1401,7 +1405,7 @@
   .ar.quest-pt { color: var(--primary); font-weight: 700; }
 
   /* 모바일 — 선물상자가 좁은 폭에서 안 넘치도록 타이트하게 */
-  @media (max-width: 767px) {
+	  @media (max-width: 767px) {
     .quest-card { padding: 18px 12px 16px; }
     .quest-gifts { padding: 0 2px; }
     .quest-gift { width: 58px; gap: 5px; }
@@ -1412,11 +1416,11 @@
     .quest-gift-mir img { width: 11px; height: 11px; }
     .quest-gift-score { font-size: 12px; }
     .quest-gift-badge { font-size: 9px; padding: 2px 7px; top: -10px; }
-    .quest-gauge { left: 32px; right: 32px; top: 23px; height: 8px; }
-    .quest-hint {
-      margin-top: 6px;
-      font-size: 11px;
-      line-height: 1.2;
+	    .quest-gauge { left: var(--quest-gauge-left-m, 32px); right: var(--quest-gauge-right-m, 32px); top: 23px; height: 8px; }
+	    .quest-hint {
+	      margin-top: 6px;
+	      font-size: 11px;
+	      line-height: 1.2;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -2023,8 +2027,33 @@
     { score: 60, mir: 20 },
     { score: 100, mir: 25 },
   ];
-  const claimedMs = new Set();
-  const readyMissions = new Set();
+	  const claimedMs = new Set();
+	  const readyMissions = new Set();
+	  let questGaugeAligned = false;
+
+	  // 게이지 트랙을 "시작" 아이콘 중심 ~ 마지막 선물상자 아이콘 중심에 맞춰 정렬
+	  function alignQuestGauge() {
+	    const track = document.querySelector('.quest-track');
+	    const startIcon = document.querySelector('.quest-start .quest-gift-icon');
+	    const lastGiftIcon = document.querySelector('#gift3 .quest-gift-icon') || document.querySelector('.quest-gifts .quest-gift:last-child .quest-gift-icon');
+	    if (!track || !startIcon || !lastGiftIcon) return;
+
+	    const tr = track.getBoundingClientRect();
+	    const sr = startIcon.getBoundingClientRect();
+	    const er = lastGiftIcon.getBoundingClientRect();
+
+	    // Center points relative to track
+	    const startCenter = (sr.left + sr.right) / 2 - tr.left;
+	    const endCenter = (er.left + er.right) / 2 - tr.left;
+	    const left = Math.max(0, Math.min(startCenter, tr.width));
+	    const right = Math.max(0, Math.min(tr.width - endCenter, tr.width));
+
+	    track.style.setProperty('--quest-gauge-left', left.toFixed(2) + 'px');
+	    track.style.setProperty('--quest-gauge-right', right.toFixed(2) + 'px');
+	    track.style.setProperty('--quest-gauge-left-m', left.toFixed(2) + 'px');
+	    track.style.setProperty('--quest-gauge-right-m', right.toFixed(2) + 'px');
+	    questGaugeAligned = true;
+	  }
 
   function setBtnState(btn, state, targetText) {
     if (!btn) return;
@@ -2136,11 +2165,13 @@
   }
 
   // 게이지 + 선물상자 상태 갱신
-  function updateQuest() {
-    const fill = document.getElementById('questGauge');
-    if (fill) fill.style.width = Math.min(questScore / QUEST_MAX * 100, 100) + '%';
-    const nowEl = document.getElementById('questScoreNow');
-    const maxEl = document.getElementById('questScoreMax');
+	  function updateQuest() {
+	    // 첫 렌더 및 리사이즈 이후, 게이지 정렬 먼저 맞춘 뒤 fill 업데이트
+	    if (!questGaugeAligned) alignQuestGauge();
+	    const fill = document.getElementById('questGauge');
+	    if (fill) fill.style.width = Math.min(questScore / QUEST_MAX * 100, 100) + '%';
+	    const nowEl = document.getElementById('questScoreNow');
+	    const maxEl = document.getElementById('questScoreMax');
     if (nowEl) nowEl.textContent = String(questScore);
     if (maxEl) maxEl.textContent = String(QUEST_MAX);
 
@@ -2165,19 +2196,22 @@
     const start = document.querySelector('.quest-start');
     if (start) start.classList.toggle('started', questScore > 0);
 
-    // 안내 문구
-    const hasClaimable = MILESTONES.some((m, i) => questScore >= m.score && !claimedMs.has(i));
-    const hint = document.getElementById('questHint');
-    if (hint) {
-      const full = hint.querySelector('.hint-full');
-      const short = hint.querySelector('.hint-short');
-      const msg = hasClaimable
-        ? { full: '선물상자를 눌러 보상을 수령하세요!', short: '상자를 눌러 미르 수령하기!' }
-        : { full: '미션 완료해서 점수를 모으세요', short: '미션 완료해서 점수를 모으세요' };
-      if (full) full.textContent = msg.full;
-      if (short) short.textContent = msg.short;
-      hint.classList.toggle('active', hasClaimable);
-    }
+	    // 안내 문구
+	    const hasClaimable = MILESTONES.some((m, i) => questScore >= m.score && !claimedMs.has(i));
+	    const allClaimed = (questScore >= QUEST_MAX) && MILESTONES.every((m, i) => claimedMs.has(i));
+	    const hint = document.getElementById('questHint');
+	    if (hint) {
+	      const full = hint.querySelector('.hint-full');
+	      const short = hint.querySelector('.hint-short');
+	      const msg = allClaimed
+	        ? { full: '오늘 보상을 모두 수령했습니다', short: '오늘 보상을 모두 수령했습니다' }
+	        : (hasClaimable
+	          ? { full: '선물상자를 눌러 보상을 수령하세요!', short: '상자를 눌러 미르 수령하기!' }
+	          : { full: '미션 완료해서 점수를 모으세요', short: '미션 완료해서 점수를 모으세요' });
+	      if (full) full.textContent = msg.full;
+	      if (short) short.textContent = msg.short;
+	      hint.classList.toggle('active', hasClaimable && !allClaimed);
+	    }
 
     // 미션 버튼 상태도 함께 갱신 (특히 allBonus 조건)
     renderSimpleMissions();
@@ -2210,10 +2244,12 @@
     tick();
     setInterval(tick, 1000);
   }
-  initQuestTimer();
-  updateQuest();
-  renderChatMissions();
-  renderSimpleMissions();
+	  initQuestTimer();
+	  // 반응형 레이아웃에서 상자 위치가 바뀌면 게이지도 즉시 재정렬
+	  window.addEventListener('resize', () => { questGaugeAligned = false; updateQuest(); }, { passive: true });
+	  updateQuest();
+	  renderChatMissions();
+	  renderSimpleMissions();
 
   function confetti(centerEl) {
     const container = centerEl || document.querySelector('.roulette-wrap');
