@@ -22,8 +22,8 @@
 
     --bg-base:   #1B1C1E;
     --bg-card:   #1B1C1E;
-    --bg-card-2: #212225;
-    --bg-card-hover: #26272A;
+    --bg-card-2: #2A2B2F;
+    --bg-card-hover: #34353A;
 
     --line-soft:  #2E2F33;
     --line-solid: #37383C;
@@ -44,10 +44,12 @@
   body {
     font-family: 'Pretendard JP', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
     background-color: var(--bg-base);
-    background-image: radial-gradient(ellipse 700px 260px at 50% 0, rgba(19,187,143,0.10) 0%, transparent 100%);
+    background-image:
+      radial-gradient(820px 520px at 50% -60px, rgba(20,195,145,0.10), transparent 60%),
+      radial-gradient(640px 640px at 8% 22%, rgba(20,195,145,0.035), transparent 55%),
+      radial-gradient(720px 720px at 96% 86%, rgba(20,195,145,0.04), transparent 55%);
     background-repeat: no-repeat;
-    background-position: top center;
-    background-size: 100% 480px;
+    background-attachment: fixed;
     color: var(--label-normal);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -204,10 +206,13 @@
     appearance: none;
     -webkit-tap-highlight-color: transparent;
     width: 100%;
-    min-height: 56px;
+    min-height: 62px;
     padding: 14px 16px;
-    background: var(--bg-card);
-    border: 1px solid var(--line-soft);
+    background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.035));
+    backdrop-filter: blur(18px) saturate(135%);
+    -webkit-backdrop-filter: blur(18px) saturate(135%);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.26);
     border-radius: var(--radius-card);
     color: var(--label-normal);
     font-family: inherit;
@@ -224,8 +229,8 @@
   }
   @media (hover: hover) {
     .opt:hover:not(.is-selected) {
-      background: var(--bg-card-hover);
-      border-color: var(--line-solid);
+      background: rgba(255, 255, 255, 0.19);
+      border-color: rgba(255, 255, 255, 0.16);
     }
   }
   .opt:focus { outline: none; }
@@ -233,7 +238,8 @@
   .opt:active { transform: scale(0.985); }
   .opt.is-selected {
     border-color: var(--primary-normal);
-    background: var(--primary-soft);
+    background: rgba(20, 195, 145, 0.10);
+    box-shadow: 0 4px 20px rgba(20, 195, 145, 0.16);
   }
   @keyframes opt-in {
     from { opacity: 0; transform: translateY(6px); }
@@ -244,7 +250,7 @@
     width: 22px;
     height: 22px;
     border-radius: 50%;
-    border: 1.5px solid var(--line-solid);
+    border: 1.5px solid rgba(255, 255, 255, 0.45);
     flex-shrink: 0;
     display: flex; align-items: center; justify-content: center;
     transition: all 160ms ease;
@@ -269,7 +275,7 @@
   }
   .opt-quote {
     font-size: 13px;
-    color: var(--label-alternative);
+    color: rgba(208, 210, 216, 0.78);
     margin-top: 3px;
     line-height: 1.45;
     font-weight: 400;
@@ -298,8 +304,11 @@
     appearance: none;
     width: 100%;
     padding: 12px;
-    background: var(--bg-card);
-    border: 1px solid var(--line-soft);
+    background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.035));
+    backdrop-filter: blur(18px) saturate(135%);
+    -webkit-backdrop-filter: blur(18px) saturate(135%);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.26);
     border-radius: 20px;
     display: flex;
     align-items: center;
@@ -315,7 +324,8 @@
   .gender-card:active { transform: scale(0.985); }
   .gender-card.is-selected {
     border-color: var(--primary-normal);
-    background: var(--primary-soft);
+    background: rgba(20, 195, 145, 0.10);
+    box-shadow: 0 4px 20px rgba(20, 195, 145, 0.16);
   }
 
   .gender-image {
@@ -347,7 +357,7 @@
     width: 26px;
     height: 26px;
     border-radius: 50%;
-    border: 1.5px solid var(--line-solid);
+    border: 1.5px solid rgba(255, 255, 255, 0.42);
     flex-shrink: 0;
     display: flex; align-items: center; justify-content: center;
     transition: all 160ms ease;
@@ -377,8 +387,10 @@
     -webkit-tap-highlight-color: transparent;
     padding: 10px 14px;
     border-radius: var(--radius-pill);
-    background: var(--bg-card);
-    border: 1px solid var(--line-soft);
+    background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.035));
+    backdrop-filter: blur(14px) saturate(135%);
+    -webkit-backdrop-filter: blur(14px) saturate(135%);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     color: var(--label-normal);
     font-family: inherit;
     font-size: 14px;
@@ -389,8 +401,8 @@
   }
   @media (hover: hover) {
     .tag-chip:hover:not(.is-selected) {
-      background: var(--bg-card-hover);
-      border-color: var(--line-solid);
+      background: rgba(255, 255, 255, 0.19);
+      border-color: rgba(255, 255, 255, 0.16);
     }
   }
   .tag-chip:focus { outline: none; }
@@ -398,7 +410,7 @@
   .tag-chip:active { transform: scale(0.96); }
   .tag-chip.is-selected {
     border-color: var(--primary-normal);
-    background: var(--primary-soft);
+    background: rgba(20, 195, 145, 0.18);
     color: var(--label-strong);
     font-weight: 700;
   }
@@ -652,8 +664,11 @@
     display: flex;
     gap: 14px;
     padding: 14px;
-    background: var(--bg-card);
-    border: 1px solid var(--line-soft);
+    background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.035));
+    backdrop-filter: blur(18px) saturate(135%);
+    -webkit-backdrop-filter: blur(18px) saturate(135%);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.26);
     border-radius: var(--radius-card);
     align-items: center;
     cursor: pointer;
@@ -665,19 +680,20 @@
   @media (hover: hover) {
     .char-card:hover:not(.is-selected) {
       transform: translateY(-1px);
-      border-color: var(--line-solid);
+      background: rgba(255, 255, 255, 0.18);
     }
   }
   .char-card:active { transform: scale(0.99); }
   .char-card.is-selected {
     border-color: var(--primary-normal);
-    background: var(--primary-soft);
+    background: rgba(20, 195, 145, 0.10);
+    box-shadow: 0 4px 20px rgba(20, 195, 145, 0.16);
   }
   .char-check {
     width: 26px;
     height: 26px;
     border-radius: 50%;
-    border: 1.5px solid var(--line-solid);
+    border: 1.5px solid rgba(255, 255, 255, 0.42);
     flex-shrink: 0;
     display: flex; align-items: center; justify-content: center;
     transition: all 160ms ease;
@@ -712,13 +728,6 @@
     object-fit: cover;
     object-position: center top;
     display: block;
-  }
-  .char-img-wrap::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, transparent 55%, rgba(0,0,0,0.35) 100%);
-    pointer-events: none;
   }
 
   .char-body { flex: 1; min-width: 0; }
@@ -783,6 +792,13 @@
   }
   .toast.show { top: 64px; }
   .toast-mir { color: var(--primary-normal); }
+
+  /* backdrop-filter 미지원 브라우저 폴백: 솔리드 surface */
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .opt, .gender-card, .tag-chip, .char-card { background: var(--bg-card-2); }
+    .opt.is-selected, .gender-card.is-selected, .char-card.is-selected { background: var(--primary-soft); }
+    .tag-chip.is-selected { background: var(--primary-soft); }
+  }
 
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
@@ -1169,6 +1185,11 @@
   let cycleTimer = null;
   // 셔플(로딩) 전용 카드 10장 — 선택 성별과 무관하게 남여 모두 노출
   const SHUFFLE_CARDS = Array.from({ length: 10 }, (_, i) => `images/shuffle/${i + 1}.png`);
+  // 셔플 카드 1~5 = 남성, 6~10 = 여성 (결과 카드 썸네일에도 재사용)
+  const SHUFFLE_BY_GENDER = {
+    male: SHUFFLE_CARDS.slice(0, 5),
+    female: SHUFFLE_CARDS.slice(5, 10),
+  };
 
   function startLoading() {
     // 셔플 애니메이션엔 셔플 전용 카드를 섞어서 노출
@@ -1231,7 +1252,16 @@
     const top3 = pickTop3(state.selections);
     const list = $('#char-list');
     list.innerHTML = '';
+    // 결과 썸네일은 성별 맞춰 셔플 카드에서 중복 없이 배정
+    const thumbUsed = { male: 0, female: 0 };
+    const pickThumb = (c) => {
+      const pool = SHUFFLE_BY_GENDER[c.gender] || SHUFFLE_CARDS;
+      const img = pool[thumbUsed[c.gender] % pool.length];
+      thumbUsed[c.gender] += 1;
+      return img;
+    };
     top3.forEach((c, i) => {
+      const thumb = pickThumb(c);
       const card = document.createElement('div');
       card.className = 'char-card' + (i === 0 ? ' is-selected' : '');
       card.dataset.charId = c.id;
@@ -1242,7 +1272,7 @@
         : c.tags.slice(0, 3);
       const tags = finalTags.map((t) => `<span class="tag">${t}</span>`);
       card.innerHTML = `
-        <div class="char-img-wrap"><img src="${c.img}" alt="${c.name}" loading="lazy" /></div>
+        <div class="char-img-wrap"><img src="${thumb}" alt="${c.name}" loading="lazy" /></div>
         <div class="char-body">
           <h3 class="char-name">${c.name}</h3>
           <p class="char-desc">${c.desc}</p>
