@@ -66,6 +66,7 @@
     flex-direction: column;
   }
 
+
   /* === Header === */
   .header {
     display: flex;
@@ -334,8 +335,6 @@
     object-position: center 18%;
     display: block;
   }
-  .gender-image.is-split img { width: 50%; }
-  .gender-image.is-split img:nth-child(2) { object-position: center 22%; }
 
   .gender-label {
     flex: 1;
@@ -861,7 +860,7 @@
     <div class="gender-list">
       <button class="gender-card" data-value="male">
         <div class="gender-image">
-          <img src="images/chars/adrian-dark.png" alt="남성 캐릭터" />
+          <img src="images/chars/gender-male.png" alt="남성 캐릭터" />
         </div>
         <div class="gender-label">남성</div>
         <div class="gender-check">
@@ -870,7 +869,7 @@
       </button>
       <button class="gender-card" data-value="female">
         <div class="gender-image">
-          <img src="images/chars/char-iseol.png" alt="여성 캐릭터" />
+          <img src="images/chars/gender-female.png" alt="여성 캐릭터" />
         </div>
         <div class="gender-label">여성</div>
         <div class="gender-check">
@@ -878,9 +877,8 @@
         </div>
       </button>
       <button class="gender-card" data-value="both">
-        <div class="gender-image is-split">
-          <img src="images/chars/jeremy-psycho.png" alt="" />
-          <img src="images/chars/char-eunjeong.png" alt="" />
+        <div class="gender-image">
+          <img src="images/chars/gender-both.png" alt="남녀 캐릭터" />
         </div>
         <div class="gender-label">모두</div>
         <div class="gender-check">
@@ -894,8 +892,8 @@
   <section class="frame" data-frame="3" data-mode="tags" data-key="tags">
     <p class="frame-eyebrow">4단계 · 태그 선호도</p>
     <h1 class="frame-title">어떤 매력에 끌리세요?</h1>
-    <p class="frame-subtitle">취향에 맞는 태그를 최대 10개까지 골라주세요.</p>
-    <p class="tag-counter"><strong id="tag-count">0</strong> / 10 선택</p>
+    <p class="frame-subtitle">취향에 맞는 태그를 최대 5개까지 골라주세요.</p>
+    <p class="tag-counter"><strong id="tag-count">0</strong> / 5 선택</p>
     <div class="tag-pool" id="tag-pool"></div>
     <div class="footer">
       <button class="cta" id="tags-next" disabled>다음</button>
@@ -993,35 +991,36 @@
 
   // === Tag pools (by preferred character gender) ===
   const tagsByGender = {
-    male: ['다정한', '차도남', '츤데레', '카리스마', '마피아', '재벌', '왕자', '헌터', '알파', '동급생', '미소년', '천재', '야성적', '보호자', '시니어', '집착', '판타지', '학원물'],
-    female: ['상냥한', '청순', '글래머', '도도한', '발랄한', '츤데레', '야성적', '누나', '여동생', '메이드', '아이돌', '학생', '학구파', '직장상사', '운동선수', '마법소녀', '학원물', '판타지'],
-    both: ['다정한', '카리스마', '발랄한', '차도남', '츤데레', '글래머', '미스터리', '재벌', '학원물', '판타지', '집착', '왕자', '아이돌', '운동선수', '천재', '미소년', '도도한', '야성적'],
+    male: ['다정한', '차도남', '재벌', '츤데레', '마피아', '집착', '카리스마', '왕자', '소꿉친구', '다크로맨스', '헌터', '알파', '판타지', '야성적', '금단의사랑', '학원물', '보호자', '이세계', '미소년', '천재'],
+    female: ['상냥한', '도도한', '누나', '아이돌', '글래머', '츤데레', '직장상사', '청순', '발랄한', '마법소녀', '소꿉친구', '다크로맨스', '메이드', '연상연하', '학원물', '카리스마', '학구파', '판타지', '여동생', '학생'],
+    both: ['다정한', '차도남', '도도한', '재벌', '마피아', '아이돌', '츤데레', '집착', '글래머', '카리스마', '소꿉친구', '왕자', '다크로맨스', '금단의사랑', '직장상사', '판타지', '누나', '학원물', '메이드', '연상연하'],
   };
 
   // === Character pool ===
-  const charsMale = [
-    { id: 'adrian',  name: 'Adrian',    desc: '말 없이 너를 지켜주는 다크 로맨스의 그림자.', img: 'images/chars/adrian-dark.png',     tags: ['다정한','보호자','알파','차도남','집착'],   type: 'deep' },
-    { id: 'rafe',    name: 'Rafe',      desc: '거친 마피아 보스, 너 앞에서만 무너지는 남자.', img: 'images/chars/rafe-mafia.png',      tags: ['마피아','야성적','카리스마','차도남'],     type: 'roleplay' },
-    { id: 'leo',     name: '레오나르드', desc: '이세계에서 너를 기다려온 외로운 왕자.',     img: 'images/chars/isekai-prince.png',   tags: ['왕자','다정한','판타지','미소년'],         type: 'roleplay' },
-    { id: 'kael',    name: '카엘',       desc: '뱀파이어를 사냥하는 냉정한 헌터.',          img: 'images/chars/vampire-hunter.png',  tags: ['헌터','차도남','카리스마','판타지','야성적'], type: 'roleplay' },
-    { id: 'caleb',   name: 'Caleb',     desc: '뒷자리 짝꿍이 된 학교 최고 인기남.',        img: 'images/chars/caleb-hockey.png',    tags: ['동급생','학원물','미소년','운동선수'],     type: 'casual' },
-    { id: 'jeremy',  name: 'Jeremy',    desc: '너에게서 시선을 떼지 못하는 미스터리한 그.',   img: 'images/chars/jeremy-psycho.png',   tags: ['집착','미스터리','천재','차도남'],         type: 'deep' },
-    { id: 'ceo',     name: '윤강현',     desc: '얼음 같은 재벌 CEO, 예외는 오직 너뿐.',     img: 'images/chars/ceo-boss.png',        tags: ['재벌','차도남','시니어','카리스마'],       type: 'casual' },
-    { id: 'david',   name: 'David',     desc: '강렬한 알파의 세계관, 깊이 빠져들 준비됐어?', img: 'images/chars/david-omegaverse.png', tags: ['알파','야성적','판타지','카리스마'],       type: 'roleplay' },
-  ];
-  const charsFemale = [
-    { id: 'iseol',    name: '이슬',     desc: '도도하지만 너 앞에선 약해지는 톱 아이돌.',   img: 'images/chars/char-iseol.png',       tags: ['아이돌','도도한','글래머','직장상사'],  type: 'casual' },
-    { id: 'eunjeong', name: '은정',     desc: '늘 곁에서 너를 챙겨주는 다정한 누나.',     img: 'images/chars/char-eunjeong.png',    tags: ['상냥한','누나','청순','학구파'],         type: 'casual' },
-    { id: 'mgirl',    name: '루나',     desc: '비밀스러운 마법소녀, 너만의 수호자.',     img: 'images/chars/magical-girl-sim.png', tags: ['마법소녀','발랄한','판타지','학생'],     type: 'roleplay' },
-    { id: 'nade',     name: '시아',     desc: '쓰다듬어 주는 손길이 익숙한 큰누나.',     img: 'images/chars/nadenade-sister.png',  tags: ['누나','상냥한','글래머','발랄한'],       type: 'deep' },
-    { id: 'areum',    name: '아름',     desc: '동네 친구에서 시작된 두근거림.',         img: 'images/chars/friend-areum.png',     tags: ['발랄한','동급생','학원물','청순'],       type: 'casual' },
-    { id: 'yusayeon', name: '유사연',    desc: '냉철한 사수, 회식 후 다른 얼굴이 보인다.',  img: 'images/chars/yusayeon.jpg',         tags: ['직장상사','도도한','카리스마','글래머'], type: 'casual' },
+  // === Character pool (단일 배열 · 카드마다 gender 필드) ===
+  // 나중에 50장으로 확장 시 이 배열에 { id, name, desc, img, gender, tags, type } 항목만 추가하면 됨.
+  // gender: 'male' | 'female'  /  tags: 설문 태그 풀(한글) 어휘와 일치시킬 것  /  type: 'casual' | 'deep' | 'roleplay'
+  const CHARACTERS = [
+    { id: 'adrian',  name: 'Adrian',    desc: '말 없이 너를 지켜주는 다크 로맨스의 그림자.', img: 'images/chars/adrian-dark.png',     gender: 'male', tags: ['다정한','보호자','알파','차도남','집착'],   type: 'deep' },
+    { id: 'rafe',    name: 'Rafe',      desc: '거친 마피아 보스, 너 앞에서만 무너지는 남자.', img: 'images/chars/rafe-mafia.png',      gender: 'male', tags: ['마피아','야성적','카리스마','차도남'],     type: 'roleplay' },
+    { id: 'leo',     name: '레오나르드', desc: '이세계에서 너를 기다려온 외로운 왕자.',     img: 'images/chars/isekai-prince.png',   gender: 'male', tags: ['왕자','다정한','판타지','미소년','이세계'], type: 'roleplay' },
+    { id: 'kael',    name: '카엘',       desc: '뱀파이어를 사냥하는 냉정한 헌터.',          img: 'images/chars/vampire-hunter.png',  gender: 'male', tags: ['헌터','차도남','카리스마','판타지','야성적'], type: 'roleplay' },
+    { id: 'caleb',   name: 'Caleb',     desc: '뒷자리 짝꿍이 된 학교 최고 인기남.',        img: 'images/chars/caleb-hockey.png',    gender: 'male', tags: ['학원물','미소년','소꿉친구'],     type: 'casual' },
+    { id: 'jeremy',  name: 'Jeremy',    desc: '너에게서 시선을 떼지 못하는 미스터리한 그.',   img: 'images/chars/jeremy-psycho.png',   gender: 'male', tags: ['집착','천재','차도남','다크로맨스'],         type: 'deep' },
+    { id: 'ceo',     name: '윤강현',     desc: '얼음 같은 재벌 CEO, 예외는 오직 너뿐.',     img: 'images/chars/ceo-boss.png',        gender: 'male', tags: ['재벌','차도남','카리스마'],       type: 'casual' },
+    { id: 'david',   name: 'David',     desc: '강렬한 알파의 세계관, 깊이 빠져들 준비됐어?', img: 'images/chars/david-omegaverse.png', gender: 'male', tags: ['알파','야성적','판타지','카리스마'],       type: 'roleplay' },
+    { id: 'iseol',    name: '이슬',     desc: '도도하지만 너 앞에선 약해지는 톱 아이돌.',   img: 'images/chars/char-iseol.png',       gender: 'female', tags: ['아이돌','도도한','글래머','직장상사'],  type: 'casual' },
+    { id: 'eunjeong', name: '은정',     desc: '늘 곁에서 너를 챙겨주는 다정한 누나.',     img: 'images/chars/char-eunjeong.png',    gender: 'female', tags: ['상냥한','누나','청순','학구파'],         type: 'casual' },
+    { id: 'mgirl',    name: '루나',     desc: '비밀스러운 마법소녀, 너만의 수호자.',     img: 'images/chars/magical-girl-sim.png', gender: 'female', tags: ['마법소녀','발랄한','판타지','학생'],     type: 'roleplay' },
+    { id: 'nade',     name: '시아',     desc: '쓰다듬어 주는 손길이 익숙한 큰누나.',     img: 'images/chars/nadenade-sister.png',  gender: 'female', tags: ['누나','상냥한','글래머','발랄한'],       type: 'deep' },
+    { id: 'areum',    name: '아름',     desc: '동네 친구에서 시작된 두근거림.',         img: 'images/chars/friend-areum.png',     gender: 'female', tags: ['발랄한','소꿉친구','학원물','청순'],       type: 'casual' },
+    { id: 'yusayeon', name: '유사연',    desc: '냉철한 사수, 회식 후 다른 얼굴이 보인다.',  img: 'images/chars/yusayeon.jpg',         gender: 'female', tags: ['직장상사','도도한','카리스마','글래머'], type: 'casual' },
   ];
 
   function getCharPool(gender) {
-    if (gender === 'male') return charsMale;
-    if (gender === 'female') return charsFemale;
-    return [...charsMale, ...charsFemale];
+    if (gender === 'male') return CHARACTERS.filter((c) => c.gender === 'male');
+    if (gender === 'female') return CHARACTERS.filter((c) => c.gender === 'female');
+    return CHARACTERS;
   }
 
   const $ = (s) => document.querySelector(s);
@@ -1119,7 +1118,7 @@
       btn.textContent = tag;
       btn.dataset.value = tag;
       btn.style.animation = `opt-in 300ms cubic-bezier(0.22, 1, 0.36, 1) both`;
-      btn.style.animationDelay = `${i * 18}ms`;
+      btn.style.animationDelay = `${i * 14}ms`;
       if (state.selections.tags.includes(tag)) btn.classList.add('is-selected');
       btn.addEventListener('click', () => toggleTag(tag, btn));
       wrap.appendChild(btn);
@@ -1133,7 +1132,7 @@
       cur.splice(idx, 1);
       btn.classList.remove('is-selected');
     } else {
-      if (cur.length >= 10) {
+      if (cur.length >= 5) {
         const dropped = cur.shift();
         const droppedBtn = document.querySelector(`.tag-chip[data-value="${dropped}"]`);
         if (droppedBtn) droppedBtn.classList.remove('is-selected');
@@ -1150,7 +1149,7 @@
     const helper = $('#tags-helper');
     if (n >= 1) {
       btn.disabled = false;
-      helper.textContent = n === 10 ? '최대 10개까지 선택했어요' : `${n}개 선택됨 · 더 고를 수 있어요`;
+      helper.textContent = n === 5 ? '최대 5개까지 선택했어요' : `${n}개 선택됨 · 더 고를 수 있어요`;
     } else {
       btn.disabled = true;
       helper.textContent = '1개 이상 선택해주세요';
@@ -1168,10 +1167,16 @@
   ];
   let loadingTimers = [];
   let cycleTimer = null;
+  // 셔플(로딩) 전용 카드 10장 — 선택 성별과 무관하게 남여 모두 노출
+  const SHUFFLE_CARDS = Array.from({ length: 10 }, (_, i) => `images/shuffle/${i + 1}.png`);
+
   function startLoading() {
-    // 카드 덱 셋업: 캐릭터 풀에서 이미지 가져옴
-    const pool = getCharPool(state.selections.charGender);
-    const imgs = pool.map((c) => c.img);
+    // 셔플 애니메이션엔 셔플 전용 카드를 섞어서 노출
+    const imgs = SHUFFLE_CARDS.slice();
+    for (let i = imgs.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [imgs[i], imgs[j]] = [imgs[j], imgs[i]];
+    }
 
     // back 카드 두 장 (정적, 흐릿)
     $('#deck-back-left').src  = imgs[1 % imgs.length] || imgs[0];
