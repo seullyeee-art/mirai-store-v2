@@ -356,16 +356,6 @@
     font-weight: 700;
   }
 
-  .tag-counter {
-    font-size: 13px;
-    color: var(--label-alternative);
-    margin: 0 0 14px;
-    font-weight: 500;
-  }
-  .tag-counter strong {
-    color: var(--primary-normal);
-    font-variant-numeric: tabular-nums;
-  }
 
   /* === Name input === */
   .name-input-wrap {
@@ -416,6 +406,7 @@
     align-items: flex-end;
     gap: 10px;
     padding: 4px 0;
+    margin-bottom: 20px;
   }
   .name-preview-avatar {
     width: 44px; height: 44px;
@@ -460,6 +451,47 @@
     font-weight: 700;
   }
   .name-preview-bubble.is-empty .name-preview-highlight { display: none; }
+
+  /* === Persona field (optional) === */
+  .persona-field {
+    margin-top: 24px;
+  }
+  .persona-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--label-normal);
+    margin-bottom: 8px;
+  }
+  .persona-optional {
+    font-weight: 400;
+    color: var(--label-alternative);
+  }
+  .persona-input {
+    width: 100%;
+    min-height: 72px;
+    padding: 14px 16px;
+    appearance: none;
+    resize: none;
+    background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.035));
+    backdrop-filter: blur(18px) saturate(135%);
+    -webkit-backdrop-filter: blur(18px) saturate(135%);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.26);
+    border-radius: var(--radius-card);
+    color: var(--label-strong);
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.5;
+    transition: border-color 160ms ease, background 160ms ease;
+  }
+  .persona-input::placeholder { color: var(--label-alternative); font-weight: 400; }
+  .persona-input:focus {
+    outline: none;
+    border-color: var(--primary-normal);
+    background: rgba(20, 195, 145, 0.08);
+  }
 
   /* === Bottom CTA (MIRAI signature) === */
   .footer {
@@ -859,7 +891,7 @@
 
   /* backdrop-filter 미지원 브라우저 폴백: 솔리드 surface */
   @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-    .opt, .gender-card, .tag-chip, .char-card, .name-input, .btn-back-inline { background: var(--bg-card-2); }
+    .opt, .gender-card, .tag-chip, .char-card, .name-input, .persona-input, .btn-back-inline { background: var(--bg-card-2); }
     .opt.is-selected, .gender-card.is-selected, .char-card.is-selected { background: var(--primary-soft); }
     .tag-chip.is-selected { background: var(--primary-soft); }
   }
@@ -926,6 +958,9 @@
         </div>
       </button>
     </div>
+    <div class="footer">
+      <button class="cta" id="gender-next" disabled>다음</button>
+    </div>
   </section>
 
   <!-- 1: Tag preferences -->
@@ -933,7 +968,6 @@
     <p class="frame-eyebrow">2단계 · 태그 선호도</p>
     <h1 class="frame-title">어떤 매력에 끌리세요?</h1>
     <p class="frame-subtitle">취향에 맞는 태그를 모두 골라주세요.</p>
-    <p class="tag-counter"><strong id="tag-count">0</strong> / 6 선택</p>
     <div class="tag-pool" id="tag-pool"></div>
     <div class="footer">
       <div class="footer-row">
@@ -949,6 +983,11 @@
     <h1 class="frame-title">캐릭터가 어떤 이름으로<br />부를까요?</h1>
     <p class="frame-subtitle">당신을 부를 이름이나 호칭을 알려주세요.</p>
 
+    <div class="name-preview">
+      <div class="name-preview-avatar"><img id="name-preview-img" src="" alt="" /></div>
+      <div class="name-preview-bubble" id="name-preview-bubble">반가워, <span class="name-preview-highlight" id="name-preview-highlight"></span> <span aria-hidden="true">😊</span></div>
+    </div>
+
     <div class="name-input-wrap">
       <input type="text" id="name-input" class="name-input" placeholder="이름 또는 호칭 입력" autocomplete="off" />
       <button type="button" class="name-clear" id="name-clear" aria-label="지우기" hidden>
@@ -956,9 +995,9 @@
       </button>
     </div>
 
-    <div class="name-preview">
-      <div class="name-preview-avatar"><img id="name-preview-img" src="" alt="" /></div>
-      <div class="name-preview-bubble" id="name-preview-bubble">반가워, <span class="name-preview-highlight" id="name-preview-highlight"></span> <span aria-hidden="true">😊</span></div>
+    <div class="persona-field">
+      <label class="persona-label" for="persona-input">되고싶은 나 <span class="persona-optional">(선택)</span></label>
+      <textarea id="persona-input" class="persona-input" rows="2" placeholder="예: 비밀 많은 이세계의 마법사, 도시를 주름잡는 재벌 상속녀..."></textarea>
     </div>
 
     <div class="footer">
@@ -1000,6 +1039,7 @@
     <div class="footer">
       <div class="footer-row">
         <button type="button" class="btn-back-inline">뒤로</button>
+        <button class="cta" id="type-next" disabled>다음</button>
       </div>
     </div>
   </section>
@@ -1056,6 +1096,7 @@
       charGender: null,
       tags: [],
       userName: '',
+      persona: '',
       type: null,
     },
     selectedChar: null,
@@ -1127,7 +1168,8 @@
     header.style.display = (idx === LOADING_FRAME) ? 'none' : '';
 
     const shownStep = Math.min(idx + 1, TOTAL_STEPS);
-    progressFill.style.width = `${(shownStep / TOTAL_STEPS) * 100}%`;
+    const completedRatio = Math.min(idx, TOTAL_STEPS) / TOTAL_STEPS;
+    progressFill.style.width = `${completedRatio * 100}%`;
     progressBar.setAttribute('aria-valuenow', String(shownStep));
   }
 
@@ -1147,7 +1189,8 @@
           frame.querySelectorAll('.opt').forEach((o) => o.classList.remove('is-selected'));
           opt.classList.add('is-selected');
           state.selections[key] = opt.dataset.value;
-          setTimeout(() => goToFrame(state.frame + 1), 220);
+          const cta = frame.querySelector('.cta');
+          if (cta) cta.disabled = false;
         });
       });
     } else if (mode === 'gender') {
@@ -1161,10 +1204,18 @@
             state.selections.tags = [];
           }
           state.selections.charGender = newVal;
-          setTimeout(() => goToFrame(state.frame + 1), 240);
+          const cta = frame.querySelector('.cta');
+          if (cta) cta.disabled = false;
         });
       });
     }
+  });
+
+  $('#gender-next').addEventListener('click', () => {
+    if (state.selections.charGender) goToFrame(state.frame + 1);
+  });
+  $('#type-next').addEventListener('click', () => {
+    if (state.selections.type) goToFrame(state.frame + 1);
   });
 
   function renderTagPool() {
@@ -1204,7 +1255,6 @@
   }
   function refreshTagsState() {
     const n = state.selections.tags.length;
-    $('#tag-count').textContent = n;
     $('#tags-next').disabled = n < 1;
   }
   $('#tags-next').addEventListener('click', () => {
@@ -1217,8 +1267,12 @@
     const gender = state.selections.charGender || 'both';
     $('#name-preview-img').src = `images/chars/gender-${gender}.png?v=2`;
     nameInput.value = state.selections.userName;
+    $('#persona-input').value = state.selections.persona;
     updateNamePreview();
   }
+  $('#persona-input').addEventListener('input', (e) => {
+    state.selections.persona = e.target.value;
+  });
   function updateNamePreview() {
     const raw = nameInput.value;
     const val = raw.trim();
