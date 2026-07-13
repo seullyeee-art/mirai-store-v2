@@ -138,7 +138,7 @@
   .name-input-wrap,
   .persona-field {
     animation: frame-in 500ms cubic-bezier(0.22, 1, 0.36, 1) both;
-    animation-delay: 1140ms;
+    animation-delay: 400ms;
   }
 
   .frame-title {
@@ -185,7 +185,7 @@
     gap: 12px;
     transition: border-color 160ms ease, background 160ms ease, transform 120ms ease;
     animation: opt-in 280ms cubic-bezier(0.22, 1, 0.36, 1) both;
-    animation-delay: 1140ms;
+    animation-delay: 400ms;
     position: relative;
   }
   @media (hover: hover) {
@@ -266,7 +266,7 @@
     color: var(--label-normal);
     transition: border-color 160ms ease, background 160ms ease, transform 120ms ease;
     animation: opt-in 280ms cubic-bezier(0.22, 1, 0.36, 1) both;
-    animation-delay: 1140ms;
+    animation-delay: 400ms;
   }
   .gender-card:focus { outline: none; }
   .gender-card:focus-visible { outline: 2px solid var(--primary-normal); outline-offset: 2px; }
@@ -1238,7 +1238,7 @@
       btn.textContent = tag;
       btn.dataset.value = tag;
       btn.style.animation = `opt-in 300ms cubic-bezier(0.22, 1, 0.36, 1) both`;
-      btn.style.animationDelay = `${1140 + i * 14}ms`;
+      btn.style.animationDelay = `${400 + i * 14}ms`;
       if (state.selections.tags.includes(tag)) btn.classList.add('is-selected');
       btn.addEventListener('click', () => toggleTag(tag, btn));
       wrap.appendChild(btn);
