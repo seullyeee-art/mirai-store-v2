@@ -118,12 +118,27 @@
     display: none;
     flex-direction: column;
     padding-top: 20px;
-    animation: frame-in 320ms cubic-bezier(0.22, 1, 0.36, 1) both;
   }
   .frame.is-active { display: flex; }
   @keyframes frame-in {
     from { opacity: 0; transform: translateY(8px); }
     to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* 문구(제목/서브타이틀) 먼저, 아래 선택/인풋 UI는 살짝 늦게 등장 */
+  .frame-title,
+  .frame-subtitle {
+    animation: frame-in 1100ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .frame-subtitle { animation-delay: 40ms; }
+  .gender-list,
+  .options,
+  .tag-pool,
+  .name-preview,
+  .name-input-wrap,
+  .persona-field {
+    animation: frame-in 500ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: 1140ms;
   }
 
   .frame-title {
@@ -170,6 +185,7 @@
     gap: 12px;
     transition: border-color 160ms ease, background 160ms ease, transform 120ms ease;
     animation: opt-in 280ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: 1140ms;
     position: relative;
   }
   @media (hover: hover) {
@@ -250,6 +266,7 @@
     color: var(--label-normal);
     transition: border-color 160ms ease, background 160ms ease, transform 120ms ease;
     animation: opt-in 280ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: 1140ms;
   }
   .gender-card:focus { outline: none; }
   .gender-card:focus-visible { outline: 2px solid var(--primary-normal); outline-offset: 2px; }
@@ -915,7 +932,7 @@
     <div class="progress" id="progress" role="progressbar" aria-valuemin="0" aria-valuemax="4" aria-valuenow="1">
       <div class="progress-fill" id="progress-fill"></div>
     </div>
-    <button class="btn-close" type="button" aria-label="닫기" onclick="if(confirm('거의 다 했는데 나가시려구요?\n완료하면 바로 보상이 들어와요!')) history.length > 1 ? history.back() : location.href='../../mirai-home/mypage.html'">
+    <button class="btn-close" type="button" aria-label="닫기" onclick="if(confirm('거의 다 했는데 나가시려구요?\n완료하면 15미르 보상이 들어와요!')) history.length > 1 ? history.back() : location.href='../../mirai-home/mypage.html'">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
     </button>
   </header>
@@ -1074,7 +1091,7 @@
 
 <!-- MIRAI signature toast -->
 <div class="toast" id="toast" role="status" aria-live="polite">
-  취향 등록 완료! <span class="toast-mir">+30 미르</span>
+  취향 등록 완료! <span class="toast-mir">+15 미르</span>
 </div>
 
 <script>
@@ -1221,7 +1238,7 @@
       btn.textContent = tag;
       btn.dataset.value = tag;
       btn.style.animation = `opt-in 300ms cubic-bezier(0.22, 1, 0.36, 1) both`;
-      btn.style.animationDelay = `${i * 14}ms`;
+      btn.style.animationDelay = `${1140 + i * 14}ms`;
       if (state.selections.tags.includes(tag)) btn.classList.add('is-selected');
       btn.addEventListener('click', () => toggleTag(tag, btn));
       wrap.appendChild(btn);
