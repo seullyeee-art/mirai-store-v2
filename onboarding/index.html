@@ -126,13 +126,6 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
-  .frame-eyebrow {
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--primary-normal);
-    letter-spacing: 0.02em;
-    margin: 0 0 10px;
-  }
   .frame-title {
     font-size: 26px;
     line-height: 1.32;
@@ -360,7 +353,7 @@
   /* === Name input === */
   .name-input-wrap {
     position: relative;
-    margin-bottom: 24px;
+    margin-bottom: 8px;
   }
   .name-input {
     width: 100%;
@@ -454,7 +447,7 @@
 
   /* === Persona field (optional) === */
   .persona-field {
-    margin-top: 24px;
+    margin-top: 8px;
   }
   .persona-label {
     display: block;
@@ -926,7 +919,6 @@
 
   <!-- 0: Preferred Character Gender -->
   <section class="frame is-active" data-frame="0" data-mode="gender" data-key="charGender">
-    <p class="frame-eyebrow">1단계 · 선호 캐릭터</p>
     <h1 class="frame-title">어떤 캐릭터와 대화하고 싶어요?</h1>
     <p class="frame-subtitle">선호 성별을 골라주세요. 취향에 맞게 추천해드릴게요.</p>
     <div class="gender-list">
@@ -965,7 +957,6 @@
 
   <!-- 1: Tag preferences -->
   <section class="frame" data-frame="1" data-mode="tags" data-key="tags">
-    <p class="frame-eyebrow">2단계 · 태그 선호도</p>
     <h1 class="frame-title">어떤 매력에 끌리세요?</h1>
     <p class="frame-subtitle">취향에 맞는 태그를 모두 골라주세요.</p>
     <div class="tag-pool" id="tag-pool"></div>
@@ -979,7 +970,6 @@
 
   <!-- 2: User Name -->
   <section class="frame" data-frame="2" data-mode="name" data-key="userName">
-    <p class="frame-eyebrow">3단계 · 호칭</p>
     <h1 class="frame-title">캐릭터가 어떤 이름으로<br />부를까요?</h1>
     <p class="frame-subtitle">당신을 부를 이름이나 호칭을 알려주세요.</p>
 
@@ -1010,7 +1000,6 @@
 
   <!-- 3: Conversation Type -->
   <section class="frame" data-frame="3" data-mode="single" data-key="type">
-    <p class="frame-eyebrow">4단계 · 대화 유형</p>
     <h1 class="frame-title">어떤 분위기의 대화를 원하세요?</h1>
     <p class="frame-subtitle">일상톡부터 본격 몰입까지, 원하는 결을 골라주세요.</p>
     <div class="options" role="radiogroup">
@@ -1024,7 +1013,7 @@
       <button class="opt" data-value="deep">
         <span class="opt-radio"></span>
         <div class="opt-body">
-          <div class="opt-label">농밀한 교감</div>
+          <div class="opt-label">연인 같은 대화</div>
           <div class="opt-quote">연인처럼 은밀하고 진하게 마음 나누기</div>
         </div>
       </button>
